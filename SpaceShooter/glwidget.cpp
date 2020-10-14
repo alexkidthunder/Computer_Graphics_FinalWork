@@ -47,9 +47,9 @@ void GLWidget::paintGL() {
 
     glColor3f(corVermelho,corVerde,corAzul);
     glBegin(GL_TRIANGLES);
-        glVertex3f(0.0f,  0.02f, 0.f);
-        glVertex3f(0.07f,-0.07f, 0.f);
-        glVertex3f(-0.07f, -0.07f, 0.f);
+        glVertex3f(0.0f,  -0.8f, 0.f);
+        glVertex3f(0.07f,-0.9f, 0.f);
+        glVertex3f(-0.07f, -0.9f, 0.f);
     glEnd();
 
 }
@@ -86,7 +86,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     }
 
     QString strSpaceShooter;
-    strSpaceShooter.append("Teste de Cores:"); strSpaceShooter.append(" R:");
+    strSpaceShooter.append("TesteAba:"); strSpaceShooter.append(" R:");
     strSpaceShooter.append(QString::number(corVermelho)); strSpaceShooter.append(" G:");
     strSpaceShooter.append(QString::number(corVerde)); strSpaceShooter.append(" B:");
     strSpaceShooter.append(QString::number(corAzul));
@@ -97,14 +97,17 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 
 void GLWidget::changeEvent(QEvent *event) {
     switch (event->type()) {
-        case QEvent::WindowStateChange:
-            // Hide cursor if the window is fullscreen, otherwise show it
-            if (windowState() == Qt::WindowFullScreen)
-                setCursor(Qt::BlankCursor);
-            else
-                unsetCursor();
-            break;
-        default:
-            break;
+    case QEvent::WindowStateChange:
+        // Hide cursor if the window is fullscreen, otherwise show it
+        if (windowState() == Qt::WindowFullScreen)
+            setCursor(Qt::BlankCursor);
+        else if (windowState() == Qt::WindowMaximized) {
+            update();
+        }
+        else
+            unsetCursor();
+        break;
+    default:
+        break;
     }
 }
