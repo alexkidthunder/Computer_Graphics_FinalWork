@@ -3,7 +3,11 @@
 #include <GL/glu.h>
 #include <QKeyEvent>
 
-GLfloat fPasso = 1.0f/255.0f;
+// Cor
+GLfloat fCor = 5.0f/255.0f;
+
+// Qnt Movimento
+GLfloat fmov = .07f;
 
 // Constructor
 GLWidget::GLWidget() {
@@ -45,6 +49,8 @@ void GLWidget::paintGL() {
 
     glLoadIdentity(); // Reset current modelview matrix
 
+    glTranslatef(direcaoX,direcaoY,0.f);
+
     glColor3f(corVermelho,corVerde,corAzul);
     glBegin(GL_TRIANGLES);
         glVertex3f(0.0f,  -0.8f, 0.f);
@@ -63,24 +69,38 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_F1:
         setWindowState(windowState() ^ Qt::WindowFullScreen); // Toggle fullscreen on F1
         break;
-    case Qt::Key_A:
-        (corVermelho>=1)?corVermelho=1:corVermelho+=fPasso;
+    case Qt::Key_R:
+        (corVermelho>=1)?corVermelho=1:corVermelho+=fCor;
         break;
-    case Qt::Key_Z:
-        (corVermelho<=0)?corVermelho=0:corVermelho-=fPasso;
+    case Qt::Key_F:
+        (corVermelho<=0)?corVermelho=0:corVermelho-=fCor;
         break;
-    case Qt::Key_S:
-        (corVerde>=1)?corVerde=1:corVerde+=fPasso;
+    case Qt::Key_T:
+        (corVerde>=1)?corVerde=1:corVerde+=fCor;
         break;
-    case Qt::Key_X:
-        (corVerde<=0)?corVerde=0:corVerde-=fPasso;
+    case Qt::Key_G:
+        (corVerde<=0)?corVerde=0:corVerde-=fCor;
         break;
-    case Qt::Key_D:
-        (corAzul>=1)?corAzul=1:corAzul+=fPasso;
+    case Qt::Key_Y:
+        (corAzul>=1)?corAzul=1:corAzul+=fCor;
         break;
-    case Qt::Key_C:
-        (corAzul<=0)?corAzul=0:corAzul-=fPasso;
+    case Qt::Key_H:
+        (corAzul<=0)?corAzul=0:corAzul-=fCor;
         break;
+
+    case Qt::Key_Right:
+        direcaoX+=fmov;
+        break;
+    case Qt::Key_Left:
+        direcaoX-=fmov;
+        break;
+    case Qt::Key_Up:
+        direcaoY+=fmov;
+        break;
+    case Qt::Key_Down:
+        direcaoY-=fmov;
+        break;
+
     default:
         QGLWidget::keyPressEvent(event); // Let base class handle the other keys
     }
@@ -90,6 +110,12 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     strSpaceShooter.append(QString::number(corVermelho)); strSpaceShooter.append(" G:");
     strSpaceShooter.append(QString::number(corVerde)); strSpaceShooter.append(" B:");
     strSpaceShooter.append(QString::number(corAzul));
+    setWindowTitle(strSpaceShooter);
+    strSpaceShooter.append("Teste de Translação 2D:");
+    strSpaceShooter.append(" X:");
+    strSpaceShooter.append(QString::number(direcaoX));
+    strSpaceShooter.append(" Y:");
+    strSpaceShooter.append(QString::number(direcaoY));
     setWindowTitle(strSpaceShooter);
 
     updateGL();

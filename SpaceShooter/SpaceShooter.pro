@@ -22,3 +22,6 @@ unix {
         -lGL \
         -lGLU
 }
+
+FORMS += \
+    mainwindow.ui

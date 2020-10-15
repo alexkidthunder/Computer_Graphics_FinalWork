@@ -21,6 +21,9 @@ private:
     GLfloat corVermelho = 1.f;
     GLfloat corVerde = 1.f;
     GLfloat corAzul = 1.f;
+
+    GLfloat direcaoX=0.0f;
+    GLfloat direcaoY=0.0f;
 };
 
 #endif // GLWIDGET_H
