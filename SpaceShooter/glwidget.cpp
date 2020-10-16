@@ -104,11 +104,10 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         break;
 
     case Qt::Key_Space:
-        // create a bullet
-        Bullet * bullet = new Bullet();
-        bullet->setPos(x(),y());
-        scene()->addItem(bullet);
-
+        //Bullet * bullet = new Bullet();
+        //bullet->setPos(x(),y());
+        //scene()->addItem(bullet);
+        break;
 
     default:
         QGLWidget::keyPressEvent(event); // Let base class handle the other keys
@@ -133,17 +132,17 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
 
 void GLWidget::changeEvent(QEvent *event) {
     switch (event->type()) {
-    case QEvent::WindowStateChange:
-        // Hide cursor if the window is fullscreen, otherwise show it
-        if (windowState() == Qt::WindowFullScreen)
-            setCursor(Qt::BlankCursor);
-        else if (windowState() == Qt::WindowMaximized) {
-            update();
-        }
-        else
-            unsetCursor();
-        break;
-    default:
-        break;
+        case QEvent::WindowStateChange:
+            // Hide cursor if the window is fullscreen, otherwise show it
+            if (windowState() == Qt::WindowFullScreen)
+                setCursor(Qt::BlankCursor);
+            else if (windowState() == Qt::WindowMaximized) {
+                update();
+            }
+            else
+                unsetCursor();
+            break;
+        default:
+            break;
     }
 }
