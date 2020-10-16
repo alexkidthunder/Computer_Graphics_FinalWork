@@ -14,7 +14,8 @@ int main(int argc, char *argv[]) {
     // Create and show our OpenGL window
     GLWidget w;
     w.setMinimumSize(800, 600);
-    w.show();    
+    w.show();
+
 
     // Let's roll!
     return a.exec();

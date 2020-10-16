@@ -3,6 +3,8 @@
 #include <GL/glu.h>
 #include <QKeyEvent>
 
+#include <bullet.h>
+
 // Cor
 GLfloat fCor = 5.0f/255.0f;
 
@@ -101,17 +103,25 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         direcaoY-=fmov;
         break;
 
+    case Qt::Key_Space:
+        // create a bullet
+        Bullet * bullet = new Bullet();
+        bullet->setPos(x(),y());
+        scene()->addItem(bullet);
+
+
     default:
         QGLWidget::keyPressEvent(event); // Let base class handle the other keys
     }
 
+    // Testes Cor e Direcao na aba
     QString strSpaceShooter;
-    strSpaceShooter.append("TesteAba:"); strSpaceShooter.append(" R:");
+    strSpaceShooter.append(" TesteAba: "); strSpaceShooter.append(" R:");
     strSpaceShooter.append(QString::number(corVermelho)); strSpaceShooter.append(" G:");
     strSpaceShooter.append(QString::number(corVerde)); strSpaceShooter.append(" B:");
     strSpaceShooter.append(QString::number(corAzul));
     setWindowTitle(strSpaceShooter);
-    strSpaceShooter.append("Teste de Translação 2D:");
+    strSpaceShooter.append(" Teste de Translação 2D: ");
     strSpaceShooter.append(" X:");
     strSpaceShooter.append(QString::number(direcaoX));
     strSpaceShooter.append(" Y:");
