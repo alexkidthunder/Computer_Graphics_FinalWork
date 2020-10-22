@@ -21,7 +21,6 @@ protected:
     void paintGL();
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent *event);
-    void layer(int h, int i, int y);
 
 private:
     void drawCube();

@@ -94,10 +94,11 @@ void GLWidget::paintGL() {
     glPopMatrix();
 
     // Base location
-    glTranslatef(0,-2,-70 + _distance);  //  Displacement in (x,y,z)
-    glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
+    glTranslatef(0 + _distance,-8,-18);  //  Displacement in (x,y,z)
+    //glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
     //glScalef(2.0,2.0,2);  //  Scale in (x,y,z)
 
+    /*
     // Draw the Sand
     glBindTexture(GL_TEXTURE_2D, _textureShip);
     glBegin(GL_QUADS);
@@ -106,31 +107,11 @@ void GLWidget::paintGL() {
         glTexCoord3f(70.0,0.0,-1);  glVertex3f(150,-1.5,-250);
         glTexCoord3f(70.0,70.0,1);  glVertex3f(150,-1.5,250);
     glEnd();
-
+*/
 
     // Design the object
 
-    displayListHandle = glGenLists(1);
-    // Start recording the new display list.
-    glNewList(displayListHandle, GL_COMPILE);
-    // Render a single cube
     drawCube();
-    // End the recording of the current display list.
-    glEndList();
-
-
-    // Mounting the pyramid
-
-    int Level = 20; // Level number, change to increase or decrease
-    int loop = Level;
-
-    // Layer event
-    for (int y = 1 ; y <= loop ; y++ ) {
-        int An = ((2*y)-1)*((2*y)-1);// Total number of blocks per level
-        Level--;
-        layer(An,An,Level);
-    }
-
 
     // Framerate control
     timer->start(15);
@@ -145,22 +126,26 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_F1:
         setWindowState(windowState() ^ Qt::WindowFullScreen); // Toggle fullscreen on F1
         break;
-    case Qt::Key_Left: // Left Button
+    case Qt::Key_Up: // Left Button
         _angle -= 1;
         if (_angle > 360)
             _angle = 0.0;
         break;
-    case Qt::Key_Right: // Right Button
+    case Qt::Key_Down: // Right Button
         _angle += 1;
         if (_angle > 360)
             _angle = 0.0;
         break;
-    case Qt::Key_Up: // Up Button
+    case Qt::Key_Right: // Up Button
         _distance += 1;
         break;
-    case Qt::Key_Down: // Down Button
+    case Qt::Key_Left: // Down Button
         _distance -= 1;
         break;
+    case Qt::Key_Space: // Down Button
+        drawCube();
+        break;
+
     case Qt::Key_L: // LIGHTING    ON / OFF
         if (glIsEnabled(GL_LIGHTING))
             glDisable(GL_LIGHTING);
@@ -190,37 +175,6 @@ void GLWidget::changeEvent(QEvent *event) {
         default:
             break;
     }
-}
-
-// Layer creation event
-void GLWidget::layer(int h, int i, int y)
-{
-    // Separate part before 0 and after 0
-    int a = (sqrt(h)-1)/2; // length
-    int b = (sqrt(i)-1)/2; // width
-    int c = y; // height
-
-    // Assembling each cube base
-    for (int x = -a ; x <= a ; x++) {
-        for (int z = -b ; z <= b ; z++ ) {
-            for (int y = 0; y <= c ; y++ ) {
-                // Stack.
-                glPushMatrix();
-                // Position next cube
-                glTranslatef( x , y , z );
-                // Call the display list which renders the cube.
-                glCallList(displayListHandle);
-                // Remove current MODELVIEW Matrix from stack.
-                glPopMatrix();
-            }
-        }
-    }
-    /*
-      //Tip shift to the corner
-    for (int x = 0 ; x < a*2-1 ; x++) {
-        for (int z = 0 ; z < b*2-1 ; z++ ) {
-        }
-    }*/
 }
 
 
