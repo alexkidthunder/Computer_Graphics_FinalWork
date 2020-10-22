@@ -2,11 +2,16 @@
 #define GLWIDGET_H
 
 #include <QGLWidget>
+#include <QTime>
+#include <QHash>
+
+class QTimer;
 
 class GLWidget : public QGLWidget {
     Q_OBJECT
 
 public:
+    // constructor
     GLWidget();
     ~GLWidget();
 
@@ -16,14 +21,22 @@ protected:
     void paintGL();
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent *event);
+    void layer(int h, int i, int y);
 
 private:
-    GLfloat corVermelho = 1.f;
-    GLfloat corVerde = 1.f;
-    GLfloat corAzul = 1.f;
+    void drawCube();
+    float _angle = 0.0;
+    float _distance = 0.0;
+    bool lightChanged;
+    int displayListHandle = -1;
 
-    GLfloat direcaoX=0.0f;
-    GLfloat direcaoY=0.0f;
+    GLuint loadTexture(QImage image);
+    QTimer *timer;
+
+    GLuint  _textureShip,
+            _textureSky,
+            _textureP;
+
 };
 
 #endif // GLWIDGET_H

@@ -2,64 +2,138 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <QKeyEvent>
-
-#include <bullet.h>
-
-// Cor
-GLfloat fCor = 5.0f/255.0f;
-
-// Qnt Movimento
-GLfloat fmov = .07f;
+#include <QTimer>
+#include <math.h>
 
 // Constructor
 GLWidget::GLWidget() {
     setWindowTitle("SpaceShooter");
+
+    lightChanged = false;
+    timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
 }
 
 // Destructor
 GLWidget::~GLWidget() {
+    glDeleteTextures(1, &_textureShip);
+    glDeleteTextures(1, &_textureSky);
+    glDeleteTextures(1, &_textureP);
 
 }
 
 // Initialize OpenGL
 void GLWidget::initializeGL() {
-    qglClearColor(Qt::black); // Set the clear color to a black background
+    glShadeModel(GL_SMOOTH);    // Enable smooth shading
+    qglClearColor(Qt::black);   // Set the clear color to a black background
+
+    glClearDepth(1.0f);      // Depth buffer setup
+    glEnable(GL_DEPTH_TEST); // Enable depth testing for z-culling
+    glDepthFunc(GL_LEQUAL);  // Set type of depth-test
+
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really nice perspective calculations corrections
+
+    glMatrixMode(GL_PROJECTION);// To operate on the Projection matrix
+    glLoadIdentity(); // Reset
+
+    glEnable(GL_TEXTURE_2D); // Habilitar TEXTURE 2D
+
+    // Upload images
+    QImage img;        
+    img = convertToGLFormat(QImage("sand.bmp"));
+    _textureShip = loadTexture(img);
+    img = convertToGLFormat(QImage("space.bmp"));
+    _textureSky = loadTexture(img);
+    img = convertToGLFormat(QImage("moontexture.bmp"));
+    _textureP = loadTexture(img);
+
+    // Set up lighting
+    GLfloat ambLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
+    GLfloat diffLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat lightPos[] = {0.0f, 0.0f, 2.0f, 1.0f};
+    // Add ambient lighting
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambLight);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffLight);
+    // Add positioned lighting
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHTING);
 }
 
 // This is called when the OpenGL window is resized
 void GLWidget::resizeGL(int width, int height) {
-    // Prevent divide by zero (in the gluPerspective call)
-    if (height == 0)
-        height = 1;
-
-    glViewport(0, 0, width, height); // Reset current viewport
-
-    glMatrixMode(GL_PROJECTION); // Select projection matrix
-    glLoadIdentity(); // Reset projection matrix
-
-    // Estabelece a janela de seleção (esquerda, direita, inferior,
-    // superior) mantendo a proporção com a janela de visualização
-    if (width <= height)
-        gluOrtho2D (-40.0f, 40.0f, -40.0f*height/width, 40.0f*height/width);
-    else
-        gluOrtho2D (-40.0f*width/height, 40.0f*width/height, -40.0f, 40.0f);
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION); // To operate on the Projection matrix
+    glLoadIdentity(); // Reset
+    // Perspective projection: ( fovy, aspect, near, far )
+    gluPerspective(60.0f, static_cast<GLfloat>(width)/height, 0.1f, 100.0f); // Calculate the aspect ratio
+    glMatrixMode(GL_MODELVIEW);  // To operate on model-view matrix
+    glLoadIdentity(); // Reset
 }
 
 // OpenGL painting code goes here
 void GLWidget::paintGL() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear screen and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity(); // Reset
 
-    glLoadIdentity(); // Reset current modelview matrix
 
-    glTranslatef(direcaoX,direcaoY,0.f);
+    // Design the environment
 
-    glColor3f(corVermelho,corVerde,corAzul);
-    glBegin(GL_TRIANGLES);
-        glVertex3f(0.0f,  -0.8f, 0.f);
-        glVertex3f(0.07f,-0.9f, 0.f);
-        glVertex3f(-0.07f, -0.9f, 0.f);
+    // Sky
+    glPushMatrix(); // Isolate the Sky withglPushMatriz
+        glBindTexture(GL_TEXTURE_2D, _textureSky);
+        glTranslatef(0,0,-100);
+        glBegin(GL_QUADS);
+            glTexCoord3f(0.0,1.0,0.1);  glVertex3f(-150,150,1);
+            glTexCoord3f(1.0,1.0,0.1);  glVertex3f(150,150,1);
+            glTexCoord3f(1.0,0.0,0.1);  glVertex3f(150,-150,0);
+            glTexCoord3f(0.0,0.0,0.1);  glVertex3f(-150,-150,0);
+        glEnd();
+    glPopMatrix();
+
+    // Base location
+    glTranslatef(0,-2,-70 + _distance);  //  Displacement in (x,y,z)
+    glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
+    //glScalef(2.0,2.0,2);  //  Scale in (x,y,z)
+
+    // Draw the Sand
+    glBindTexture(GL_TEXTURE_2D, _textureShip);
+    glBegin(GL_QUADS);
+        glTexCoord3f(0.0,70.0,1);   glVertex3f(-150,-1.5,25);
+        glTexCoord3f(0.0,0.0,-1);   glVertex3f(-150,-1.5,-25);
+        glTexCoord3f(70.0,0.0,-1);  glVertex3f(150,-1.5,-250);
+        glTexCoord3f(70.0,70.0,1);  glVertex3f(150,-1.5,250);
     glEnd();
 
+
+    // Design the object
+
+    displayListHandle = glGenLists(1);
+    // Start recording the new display list.
+    glNewList(displayListHandle, GL_COMPILE);
+    // Render a single cube
+    drawCube();
+    // End the recording of the current display list.
+    glEndList();
+
+
+    // Mounting the pyramid
+
+    int Level = 20; // Level number, change to increase or decrease
+    int loop = Level;
+
+    // Layer event
+    for (int y = 1 ; y <= loop ; y++ ) {
+        int An = ((2*y)-1)*((2*y)-1);// Total number of blocks per level
+        Level--;
+        layer(An,An,Level);
+    }
+
+
+    // Framerate control
+    timer->start(15);
 }
 
 // Key handler
@@ -71,65 +145,36 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_F1:
         setWindowState(windowState() ^ Qt::WindowFullScreen); // Toggle fullscreen on F1
         break;
-    case Qt::Key_R:
-        (corVermelho>=1)?corVermelho=1:corVermelho+=fCor;
+    case Qt::Key_Left: // Left Button
+        _angle -= 1;
+        if (_angle > 360)
+            _angle = 0.0;
         break;
-    case Qt::Key_F:
-        (corVermelho<=0)?corVermelho=0:corVermelho-=fCor;
+    case Qt::Key_Right: // Right Button
+        _angle += 1;
+        if (_angle > 360)
+            _angle = 0.0;
         break;
-    case Qt::Key_T:
-        (corVerde>=1)?corVerde=1:corVerde+=fCor;
+    case Qt::Key_Up: // Up Button
+        _distance += 1;
         break;
-    case Qt::Key_G:
-        (corVerde<=0)?corVerde=0:corVerde-=fCor;
+    case Qt::Key_Down: // Down Button
+        _distance -= 1;
         break;
-    case Qt::Key_Y:
-        (corAzul>=1)?corAzul=1:corAzul+=fCor;
-        break;
-    case Qt::Key_H:
-        (corAzul<=0)?corAzul=0:corAzul-=fCor;
-        break;
-
-    case Qt::Key_Right:
-        direcaoX+=fmov;
-        break;
-    case Qt::Key_Left:
-        direcaoX-=fmov;
-        break;
-    case Qt::Key_Up:
-        direcaoY+=fmov;
-        break;
-    case Qt::Key_Down:
-        direcaoY-=fmov;
-        break;
-
-    case Qt::Key_Space:
-        //Bullet * bullet = new Bullet();
-        //bullet->setPos(x(),y());
-        //scene()->addItem(bullet);
+    case Qt::Key_L: // LIGHTING    ON / OFF
+        if (glIsEnabled(GL_LIGHTING))
+            glDisable(GL_LIGHTING);
+        else
+            glEnable(GL_LIGHTING);
+        lightChanged = true;
         break;
 
     default:
         QGLWidget::keyPressEvent(event); // Let base class handle the other keys
     }
-
-    // Testes Cor e Direcao na aba
-    QString strSpaceShooter;
-    strSpaceShooter.append(" TesteAba: "); strSpaceShooter.append(" R:");
-    strSpaceShooter.append(QString::number(corVermelho)); strSpaceShooter.append(" G:");
-    strSpaceShooter.append(QString::number(corVerde)); strSpaceShooter.append(" B:");
-    strSpaceShooter.append(QString::number(corAzul));
-    setWindowTitle(strSpaceShooter);
-    strSpaceShooter.append(" Teste de Translação 2D: ");
-    strSpaceShooter.append(" X:");
-    strSpaceShooter.append(QString::number(direcaoX));
-    strSpaceShooter.append(" Y:");
-    strSpaceShooter.append(QString::number(direcaoY));
-    setWindowTitle(strSpaceShooter);
-
-    updateGL();
 }
 
+// Event handler
 void GLWidget::changeEvent(QEvent *event) {
     switch (event->type()) {
         case QEvent::WindowStateChange:
@@ -145,4 +190,106 @@ void GLWidget::changeEvent(QEvent *event) {
         default:
             break;
     }
+}
+
+// Layer creation event
+void GLWidget::layer(int h, int i, int y)
+{
+    // Separate part before 0 and after 0
+    int a = (sqrt(h)-1)/2; // length
+    int b = (sqrt(i)-1)/2; // width
+    int c = y; // height
+
+    // Assembling each cube base
+    for (int x = -a ; x <= a ; x++) {
+        for (int z = -b ; z <= b ; z++ ) {
+            for (int y = 0; y <= c ; y++ ) {
+                // Stack.
+                glPushMatrix();
+                // Position next cube
+                glTranslatef( x , y , z );
+                // Call the display list which renders the cube.
+                glCallList(displayListHandle);
+                // Remove current MODELVIEW Matrix from stack.
+                glPopMatrix();
+            }
+        }
+    }
+    /*
+      //Tip shift to the corner
+    for (int x = 0 ; x < a*2-1 ; x++) {
+        for (int z = 0 ; z < b*2-1 ; z++ ) {
+        }
+    }*/
+}
+
+
+// Draw cube handler
+void GLWidget::drawCube()
+{
+    glBindTexture(GL_TEXTURE_2D, _textureP);
+    // Front side
+    glBegin(GL_QUADS);  // Face
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glTexCoord3f(0.0,2.0,0.1);  glVertex3f(-0.5,0,0.5);
+        glTexCoord3f(4.0,2.0,0.1);  glVertex3f(0.5,0,0.5);
+        glTexCoord3f(4.0,0.0,0.1);  glVertex3f(0.5,-1,0.5);
+        glTexCoord3f(0.0,0.0,0.1);  glVertex3f(-0.5,-1,0.5);
+    glEnd();
+
+    // Back side
+    glBegin(GL_QUADS);  // Face
+        glNormal3f(0.0f, 0.0f, -1.0f);
+        glTexCoord3f(0.0,2.0,-1);   glVertex3f(-0.5,0,-0.5);
+        glTexCoord3f(4.0,2.0,-1);   glVertex3f(0.5,0,-0.5);
+        glTexCoord3f(4.0,0.0,-1);   glVertex3f(0.5,-1,-0.5);
+        glTexCoord3f(0.0,0.0,-1);   glVertex3f(-0.5,-1,-0.5);
+    glEnd();
+
+    // Left side
+    glBegin(GL_QUADS);  // Face
+        glNormal3f(-1.0f, 0.0f, 0.0f);
+        glTexCoord3f(0.0,2.0,1);    glVertex3f(-0.5,0,0.5);
+        glTexCoord3f(2.0,2.0,-1);   glVertex3f(-0.5,0,-0.5);
+        glTexCoord3f(2.0,0.0,-1);   glVertex3f(-0.5,-1,-0.5);
+        glTexCoord3f(0.0,0.0,1);    glVertex3f(-0.5,-1,0.5);
+    glEnd();
+
+    // Right side
+    glBegin(GL_QUADS);  // Face
+        glNormal3f(1.0f, 0.0f, 0.0f);
+        glTexCoord3f(0.0,2.0,1);    glVertex3f(0.5,0,0.5);
+        glTexCoord3f(2.0,2.0,-1);   glVertex3f(0.5,0,-0.5);
+        glTexCoord3f(2.0,0.0,-1);   glVertex3f(0.5,-1,-0.5);
+        glTexCoord3f(0.0,0.0,1);    glVertex3f(0.5,-1,0.5);
+    glEnd();
+
+    // Upper side     // Ceiling
+    glBegin(GL_QUADS);
+        glNormal3f(0.0f, 2.0f, 0.0f);
+        glTexCoord3f(0.0,2.0,1);    glVertex3f(-0.5,0,0.5);
+        glTexCoord3f(2.0,2.0,-1);   glVertex3f(-0.5,0,-0.5);
+        glTexCoord3f(2.0,0.0,-1);   glVertex3f(0.5,0,-0.5);
+        glTexCoord3f(0.0,0.0,1);    glVertex3f(0.5,0,0.5);
+    glEnd();
+}
+
+// Texture handler
+GLuint GLWidget::loadTexture(QImage image) {
+    GLuint textureId;
+    glGenTextures(1, &textureId); //Make room for our texture
+    glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //Map the image to the texture
+    glTexImage2D(GL_TEXTURE_2D,                  //Always GL_TEXTURE_2D
+                 0,                              //0 for now
+                 GL_RGBA,                        //Format OpenGL uses for image
+                 image.width(), image.height(),  //Width and height
+                 0,                              //The border of the image
+                 GL_RGBA, //GL_RGB, because pixels are stored in RGB format
+                 GL_UNSIGNED_BYTE, //GL_UNSIGNED_BYTE, because pixels are stored
+                                   //as unsigned numbers
+                 image.bits());                  //The actual pixel data
+    return textureId; //Returns the id of the texture
 }

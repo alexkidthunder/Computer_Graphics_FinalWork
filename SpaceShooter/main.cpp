@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
     w.setMinimumSize(800, 600);
     w.show();
 
-
-    // Let's roll!
+    // Execute
     return a.exec();
 }

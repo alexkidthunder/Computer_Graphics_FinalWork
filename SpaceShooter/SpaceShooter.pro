@@ -1,15 +1,18 @@
 QT += opengl
 
 TARGET = SpaceShooter
+
 TEMPLATE = app
+
 SOURCES +=  \
-            bullet.cpp \
             main.cpp \
             glwidget.cpp
+
 HEADERS +=  \
-            bullet.h \
             glwidget.h
-RESOURCES +=
+
+RESOURCES += \
+    res.qrc
 
 win32 {
     INCLUDEPATH +=
