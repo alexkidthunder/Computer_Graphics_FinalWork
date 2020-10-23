@@ -25,7 +25,8 @@ protected:
 private:
     void drawCube();
     float _angle = 0.0;
-    float _distance = 0.0;
+    float _Vdistance = 0.0;
+    float _Hdistance = 0.0;
     bool lightChanged;
     int displayListHandle = -1;
 

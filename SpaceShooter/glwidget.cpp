@@ -78,8 +78,8 @@ void GLWidget::paintGL() {
     glLoadIdentity(); // Reset
 
 
+    glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
     // Design the environment
-
     // Sky
     glPushMatrix(); // Isolate the Sky withglPushMatriz
         glBindTexture(GL_TEXTURE_2D, _textureSky);
@@ -93,13 +93,32 @@ void GLWidget::paintGL() {
     glPopMatrix();
 
     // Base location
-    glTranslatef(0 + _distance,-8/*+_angle*/,-18);  //  Displacement in (x,y,z)
+    //glTranslatef(0,-2,-70 + _distance);  //  Displacement in (x,y,z)
+    glTranslatef(0 + _Hdistance,-8/*+_angle*/,-18+_Vdistance);  //  Displacement in (x,y,z)
+
     //glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
     //glScalef(2.0,2.0,2);  //  Scale in (x,y,z)
 
+    // Draw the Sand
+    glBindTexture(GL_TEXTURE_2D, _textureShip);
+    glBegin(GL_QUADS);
+        glTexCoord3f(0.0,70.0,1);   glVertex3f(-150,-1.5,25);
+        glTexCoord3f(0.0,0.0,-1);   glVertex3f(-150,-1.5,-25);
+        glTexCoord3f(70.0,0.0,-1);  glVertex3f(150,-1.5,-250);
+        glTexCoord3f(70.0,70.0,1);  glVertex3f(150,-1.5,250);
+    glEnd();
 
     // Design the object
 
+    displayListHandle = glGenLists(1);
+    // Start recording the new display list.
+    glNewList(displayListHandle, GL_COMPILE);
+    // Render a single cube
+    drawCube();
+    // End the recording of the current display list.
+    glEndList();
+
+    //Single cube
     drawCube();
 
     // Framerate control
@@ -115,23 +134,28 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_F1:
         setWindowState(windowState() ^ Qt::WindowFullScreen); // Toggle fullscreen on F1
         break;
-
-    case Qt::Key_Up: // Left Button
-        _angle += 1;
-        break;
-    case Qt::Key_Down: // Right Button
+    case Qt::Key_A: // A Button
         _angle -= 1;
+        if (_angle > 360)
+            _angle = 0.0;
         break;
-    case Qt::Key_Right: // Up Button
-        _distance += 1;
+    case Qt::Key_D: // D Button
+        _angle += 1;
+        if (_angle > 360)
+            _angle = 0.0;
         break;
-    case Qt::Key_Left: // Down Button
-        _distance -= 1;
+    case Qt::Key_Left: // Left Button
+        _Hdistance -= 1;
         break;
-    case Qt::Key_Space: // Down Button
-        drawCube();
+    case Qt::Key_Right: // Right Button
+        _Hdistance += 1;
         break;
-
+    case Qt::Key_Up: // Up Button
+        _Vdistance -= 1;
+        break;
+    case Qt::Key_Down: // Down Button
+        _Vdistance += 1;
+        break;
     case Qt::Key_L: // LIGHTING    ON / OFF
         if (glIsEnabled(GL_LIGHTING))
             glDisable(GL_LIGHTING);
