@@ -20,7 +20,6 @@ GLWidget::~GLWidget() {
     glDeleteTextures(1, &_textureShip);
     glDeleteTextures(1, &_textureSky);
     glDeleteTextures(1, &_textureP);
-
 }
 
 // Initialize OpenGL
@@ -94,27 +93,17 @@ void GLWidget::paintGL() {
     glPopMatrix();
 
     // Base location
-    glTranslatef(0 + _distance,-8,-18);  //  Displacement in (x,y,z)
+    glTranslatef(0 + _distance,-8/*+_angle*/,-18);  //  Displacement in (x,y,z)
     //glRotatef(_angle, 0.0, 2.0, 0.0);   //  Rotation in (angulo, x, y ,z)
     //glScalef(2.0,2.0,2);  //  Scale in (x,y,z)
 
-    /*
-    // Draw the Sand
-    glBindTexture(GL_TEXTURE_2D, _textureShip);
-    glBegin(GL_QUADS);
-        glTexCoord3f(0.0,70.0,1);   glVertex3f(-150,-1.5,25);
-        glTexCoord3f(0.0,0.0,-1);   glVertex3f(-150,-1.5,-25);
-        glTexCoord3f(70.0,0.0,-1);  glVertex3f(150,-1.5,-250);
-        glTexCoord3f(70.0,70.0,1);  glVertex3f(150,-1.5,250);
-    glEnd();
-*/
 
     // Design the object
 
     drawCube();
 
     // Framerate control
-    timer->start(15);
+    timer->start(60);
 }
 
 // Key handler
@@ -126,15 +115,12 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_F1:
         setWindowState(windowState() ^ Qt::WindowFullScreen); // Toggle fullscreen on F1
         break;
+
     case Qt::Key_Up: // Left Button
-        _angle -= 1;
-        if (_angle > 360)
-            _angle = 0.0;
+        _angle += 1;
         break;
     case Qt::Key_Down: // Right Button
-        _angle += 1;
-        if (_angle > 360)
-            _angle = 0.0;
+        _angle -= 1;
         break;
     case Qt::Key_Right: // Up Button
         _distance += 1;
