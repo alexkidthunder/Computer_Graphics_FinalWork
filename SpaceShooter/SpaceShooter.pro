@@ -5,11 +5,13 @@ TARGET = SpaceShooter
 TEMPLATE = app
 
 SOURCES +=  \
+            bullet.cpp \
             enemy.cpp \
             main.cpp \
             glwidget.cpp
 
 HEADERS +=  \
+            bullet.h \
             enemy.h \
             glwidget.h
 

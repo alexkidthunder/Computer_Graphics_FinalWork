@@ -7,6 +7,7 @@
 
 class enemy:  public QObject{
     Q_OBJECT
+
 public:
     enemy(float speed, int xBoundary, float startPos);
         ~enemy();
@@ -16,6 +17,7 @@ public:
     GLuint vertexbuffer;
 
     bool getEnemyStatus();// if enemy status is not active - erase enemy from the scene
+    float getPos() const;
     float getRadius() const;
     void createEnemy();
     bool shoot();
@@ -26,35 +28,39 @@ public:
     float minY;
     float maxZ;
     float minZ;
+    float posit_x;
+    float posit_y;
+    float posit_z;
 
     float speed_;
     float life_;
     bool isActive = true;
 
-public slots:
-    void move();
+protected:
+        void privateInit();
+        void privateRender();
+        void privateUpdate();
 
 private:
-    float _positionx = 0.0;
-    float _positiony = 0.0;
-    float _positionz = 0.0;
-    bool friendly_;
-        int depth_;
+    std::string type_;
 
+    float startPos_;
 
-        float maxX;
-        float minX;
-        float maxY;
-        float minY;
-        float maxZ;
-        float minZ;
+    bool checkFlag = false;
+    float max_z = 50.0;
+    float min_z = -150.0;
 
-protected:
-    void privateInit();
-    void privateRender();
-    void privateUpdate();
+    float max_y = 10.0;
+    float min_y = 0.0;
 
-    void createBullets();
+    int z_coord = 0;
+    double y_coord = 0.0;
+
+    std::vector< std::vector<float>> vertexArray_; //vertex array
+    std::vector<float> color_;
+
+    int xBoundary_;
+    int xPos_;
 };
 
 #endif // ENEMY_H
