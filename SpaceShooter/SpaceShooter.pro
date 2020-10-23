@@ -7,15 +7,15 @@ TEMPLATE = app
 SOURCES +=  \
             bullet.cpp \
             enemy.cpp \
-            fps.cpp \
             main.cpp \
-            glwidget.cpp
+            glwidget.cpp \
+            spaceship.cpp
 
 HEADERS +=  \
             bullet.h \
             enemy.h \
-            fps.h \
-            glwidget.h
+            glwidget.h \
+            spaceship.h
 
 RESOURCES += \
     res.qrc
