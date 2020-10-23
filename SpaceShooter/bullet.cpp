@@ -17,17 +17,17 @@ bullet::bullet(float position/**/, bool friendly, int depth)
 bullet::~bullet()
 {
 }
-/*
+
 float getPosition()
 {
     return position_;
 }
 
-std::vector< std::vector<float>> Bullet::getVertexArr()
+std::vector< std::vector<float>> bullet::getVertexArr()
 {
     return vertexArray_;
 }
-*/
+
 
 void bullet::privateInit()
 {
@@ -67,17 +67,6 @@ void bullet::createBullets()
     float increment;
     glClearColor(0.0, 0.0, 0.0, 0.0);
 
-    if (type_ == "MachineGun")
-    {
-        increment = 0.8f;
-        glColor3f(1.00, 0.00, 0.00);
-    }
-    if (type_ == "Laser")
-    {
-        increment = 0.3f;
-        glColor3f(1, 0.5, 0);
-    }
-
     glBegin(GL_QUADS);
     //glNormal3f(0.0, 0.0, 1.0);
     glVertex3f(x + increment, y + increment, z + increment); vertexArray_.push_back(std::vector<float>{x + increment, y + increment, z + increment});
@@ -88,10 +77,11 @@ void bullet::createBullets()
 
 }
 
-glm::vec3 Bullet::getPos() const
+float bullet::getPos() const
 {
     return glm::vec3(position_[0], position_[1], matrix_[3][2]);
 }
+
 
 float bullet::getRadius() const
 {

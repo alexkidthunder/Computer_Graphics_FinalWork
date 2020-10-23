@@ -4,6 +4,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <string>
+#include <QObject>
 
 class bullet
 {
@@ -41,9 +42,9 @@ private:
     float maxZ;
     float minZ;
 
-    /*
+
     std::vector< std::vector<float>> vertexArray_; //vertex array
-    */
+
 };
 
 
