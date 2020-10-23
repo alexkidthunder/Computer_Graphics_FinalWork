@@ -23,6 +23,8 @@ public:
     float getRadius() const;
 
     bool shoot();
+    float getLife();
+    void setLife();
 
     float maxX;
     float minX;
