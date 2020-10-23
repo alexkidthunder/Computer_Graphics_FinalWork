@@ -20,14 +20,8 @@ bullet::~bullet()
 
 float getPosition()
 {
-    return position_;
-}
 
-std::vector< std::vector<float>> bullet::getVertexArr()
-{
-    return vertexArray_;
 }
-
 
 void bullet::privateInit()
 {
@@ -57,29 +51,12 @@ void bullet::privateUpdate()
 void bullet::createBullets()
 {
 
-    auto x = position_.x;
-    auto y = position_.y;
-    auto z = position_.z;
-
-    if (friendly_ == false)
-        z = -depth_ + position_.z;
-
-    float increment;
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-
-    glBegin(GL_QUADS);
-    //glNormal3f(0.0, 0.0, 1.0);
-    glVertex3f(x + increment, y + increment, z + increment); vertexArray_.push_back(std::vector<float>{x + increment, y + increment, z + increment});
-    glVertex3f(x - increment, y + increment, z + increment); vertexArray_.push_back(std::vector<float>{x - increment, y + increment, z + increment});
-    glVertex3f(x - increment, y - increment, z + increment); vertexArray_.push_back(std::vector<float>{x - increment, y - increment, z + increment});
-    glVertex3f(x + increment, y - increment, z + increment); vertexArray_.push_back(std::vector<float>{x + increment, y - increment, z + increment});
-    glEnd();
 
 }
 
 float bullet::getPos() const
 {
-    return glm::vec3(position_[0], position_[1], matrix_[3][2]);
+    return 0;//glm::vec3(position_[0], position_[1], matrix_[3][2]);
 }
 
 

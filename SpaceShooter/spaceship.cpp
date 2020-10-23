@@ -15,34 +15,6 @@ spaceship::~spaceship()
 {
 }
 
-void spaceship::moveRight()
-{
-    if (matrix_[3][0] <= 50.f)
-        matrix_ = glm::translate(matrix_, glm::vec3(5.0f, 0.0f, 0.0f));
-}
-
-void spaceship::moveLeft()
-{
-    if (matrix_[3][0] >= -50.f)
-        matrix_ = glm::translate(matrix_, glm::vec3(-5.0f, 0.0f, 0.0f));
-}
-
-
-void spaceship::moveUp()
-{
-    matrix_ = glm::translate(matrix_, glm::vec3(0.0f, 5.0f, 0.0f));
-}
-
-void spaceship::moveDown()
-{
-    matrix_ = glm::translate(matrix_, glm::vec3(0.0f, -5.0f, 0.0f));
-}
-
-bool spaceship::shoot()
-{
-    return false;
-}
-
 void spaceship::privateInit()
 {
     list_id = glGenLists(1);
@@ -74,17 +46,13 @@ void spaceship::privateUpdate()
 void spaceship::getSpaceShipPosition()
 {
 }
-// get position
-glm::vec3 spaceship::getPos() const
-{
-    return glm::vec3(matrix_[3][0], matrix_[3][1], matrix_[3][2]);
-}
+
 
 float spaceship::getRadius() const
 {
     auto eps = 1e-5;
 
-    float centX1, centY1, centZ1, radius;
+    float centX1, centY1, radius;
 
     if ((minX + maxX) / 2 < eps) centX1 = 0;
     else centX1 = (minX + maxX) / 2;
