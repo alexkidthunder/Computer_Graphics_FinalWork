@@ -1,21 +1,16 @@
-QT += opengl
+QT += core gui opengl \
+    widgets
 
 TARGET = SpaceShooter
 
 TEMPLATE = app
 
 SOURCES +=  \
-            bullet.cpp \
-            enemy.cpp \
             main.cpp \
-            glwidget.cpp \
-            spaceship.cpp
+            glwidget.cpp
 
 HEADERS +=  \
-            bullet.h \
-            enemy.h \
-            glwidget.h \
-            spaceship.h
+            glwidget.h
 
 RESOURCES += \
     res.qrc

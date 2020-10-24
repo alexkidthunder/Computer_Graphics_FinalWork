@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>sand.bmp</file>
-        <file>sky.bmp</file>
-        <file>pyramid.bmp</file>
-        <file>moontexture.bmp</file>
-        <file>space.bmp</file>
+        <file>texture/galagasky.bmp</file>
+        <file>texture/moontexture.bmp</file>
+        <file>texture/pyramid.bmp</file>
+        <file>texture/sand.bmp</file>
+        <file>texture/sky.bmp</file>
+        <file>texture/space.bmp</file>
+        <file>ship/drmyogl1vqc1.obj</file>
     </qresource>
 </RCC>
