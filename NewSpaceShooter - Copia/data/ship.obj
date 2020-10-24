@@ -1,7 +1,10 @@
 # Blender v2.83.5 OBJ File: ''
-# www.blender.org
+# 
+# 
+
 mtllib ship.mtl
-o SketchUp_ID3
+
+g
 v 0.115372 -0.022591 0.464535
 v 0.115372 0.183533 0.670659
 v 0.115372 -0.022591 0.670659

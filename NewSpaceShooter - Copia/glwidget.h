@@ -19,13 +19,20 @@ protected:
     void resizeGL(int width, int height);
     void paintGL();
     void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);
 
 private:
-    float _angle = 0.0;
+    float _angleH = 0.0;
+    float _angleV = 0.0;
     float _Vdistance = 0.0;
     float _Hdistance = 0.0;
     bool lightChanged;
+    int m_xRot= 0.0;
+    int m_yRot= 0.0;
+
+    QPoint m_lastPos;
 
     GLuint loadTexture(QImage image);
     GLuint carregaModelo();

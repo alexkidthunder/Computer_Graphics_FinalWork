@@ -90,6 +90,10 @@ void GLWidget::resizeGL(int width, int height) {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // Movement in paused clicks, remove for continuous movement
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity(); // Reset
+
     // Sky
     glPushMatrix();
         glBindTexture(GL_TEXTURE_2D, _textureSky);
@@ -104,7 +108,10 @@ void GLWidget::paintGL() {
         glEnd();
     glPopMatrix();
 
-glTranslatef(_Hdistance,0,_Vdistance);
+    glTranslatef(_Hdistance,0,_Vdistance);
+    // Rotation relative to the view
+    glRotatef(m_xRot / 100.0f, 0.0, 1.0, 0.0);
+    glRotatef(m_yRot / 100.0f, 1.0, 0.0, 0.0);
 
     // Floor
     glPushMatrix();
@@ -112,7 +119,8 @@ glTranslatef(_Hdistance,0,_Vdistance);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTranslatef(0,0,-6);
-        glRotatef(_angle, 0.0, 1.0, 0.0);
+        // Rotation relative to the floor
+        //glRotatef(_angle, 0.0, 1.0, 0.0);
         glBegin(GL_QUADS);
             glTexCoord3f(0.0,70.0,1);  glVertex3f(-50,-1.5,50);
             glTexCoord3f(0.0,0.0,-1);  glVertex3f(-50,-1.5,-50);
@@ -127,7 +135,8 @@ glTranslatef(_Hdistance,0,_Vdistance);
     glPushMatrix();
         //glTranslatef(0 + _Hdistance,0,-6+_Vdistance);
         glTranslatef(0,0,-6);
-        glRotatef(_angle, 0.0, 1.0, 0.0);
+        // Rotation relative to the object
+        //glRotatef(_angle, 0.0, 1.0, 0.0);
         carregaModelo();
     glPopMatrix();
 
@@ -146,16 +155,27 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         // Toggle fullscreen on F1
         setWindowState(windowState() ^ Qt::WindowFullScreen);
         break;
-    case Qt::Key_A: // A Button
-        _angle -= 1;
-        if (_angle > 360)
-            _angle = 0.0;
+    /*case Qt::Key_A: // A Button
+        _angleH -= 1;
+        if (_angleH > 360)
+            _angleH = 0.0;
         break;
     case Qt::Key_D: // D Button
-        _angle += 1;
-        if (_angle > 360)
-            _angle = 0.0;
+        _angleH += 1;
+        if (_angleH > 360)
+            _angleH = 0.0;
         break;
+    case Qt::Key_W: // A Button
+        _angleV -= 1;
+        if (_angleV > 360)
+            _angleV = 0.0;
+        break;
+    case Qt::Key_S: // D Button
+        _angleV += 1;
+        if (_angleV > 360)
+            _angleV = 0.0;
+        break;*/
+
     case Qt::Key_Left: // Left Button
         _Hdistance += 1;
         break;
@@ -179,6 +199,19 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     default:
         QGLWidget::keyPressEvent(event); // Let base class handle the other keys
     }
+}
+
+void GLWidget::mousePressEvent(QMouseEvent *event){
+    m_lastPos=event->pos();
+}
+\
+void GLWidget::mouseMoveEvent(QMouseEvent *event){
+    int dx=event->x()-m_lastPos.x();
+    int dy=event->y()-m_lastPos.y();
+
+    m_xRot+=dx;
+    m_yRot+=dy;
+    update();
 }
 
 // Event handler

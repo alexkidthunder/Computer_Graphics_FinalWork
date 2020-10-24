@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
     // Create and show our OpenGL window
     GLWidget w;
-    w.setMinimumSize(600, 600);
+    w.setMinimumSize(800, 600);
     w.show();
 
     // Let's roll!
