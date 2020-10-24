@@ -4,8 +4,6 @@
 #include <QGLWidget>
 #include <QTime>
 #include <QHash>
-#include <string>
-#include <vector>
 
 class QTimer;
 
@@ -24,8 +22,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent *event);
 
-private:
-    std::string fdata;
+private:   
     void drawCube();    
     float _angle = 0.0;
     float _Vdistance = 0.0;
@@ -33,14 +30,7 @@ private:
     bool lightChanged;
     int displayListHandle = -1;
 
-    void init_fdata();
-    void init_vertex();
-
-    struct coord{
-        float x,y,z;
-    };
-    std::vector<coord> vertex_vec;
-
+    GLuint carregaModelo();
     GLuint loadTexture(QImage image);
     QTimer *timer;
 

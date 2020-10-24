@@ -6,10 +6,12 @@ TARGET = SpaceShooter
 TEMPLATE = app
 
 SOURCES +=  \
+            glm.c \
             main.cpp \
             glwidget.cpp
 
 HEADERS +=  \
+            glm.h \
             glwidget.h
 
 RESOURCES += \

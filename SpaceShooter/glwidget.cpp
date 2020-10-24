@@ -1,16 +1,20 @@
 #include "glwidget.h"
-#include "fstream"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <QKeyEvent>
 #include <QTimer>
 #include <math.h>
-#include <QDebug>
+
+extern "C" {
+    #include "glm.h"
+}
+
+GLMmodel* pmodel = NULL;
 
 // Constructor
 GLWidget::GLWidget() {
     setWindowTitle("SpaceShooter");
-    init_fdata();
+
     lightChanged = false;
     timer = new QTimer(this);
     timer->setSingleShot(true);
@@ -62,6 +66,12 @@ void GLWidget::initializeGL() {
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
     glEnable(GL_LIGHT1);
     glEnable(GL_LIGHTING);
+
+    if (!pmodel) {
+        pmodel = glmReadOBJ("/ship/drmyogl1vqc1.obj");
+        if (!pmodel)
+            exit(0);
+    }
 }
 
 // This is called when the OpenGL window is resized
@@ -121,6 +131,13 @@ void GLWidget::paintGL() {
 
     //Single cube
     drawCube();
+
+    //Carrega o Modelo do arquivo .obj
+    glPushMatrix();
+        glTranslatef(0,0,-6);
+        glRotatef(_angle, 0.0, 1.0, 0.0);
+        carregaModelo();
+    glPopMatrix();
 
     // Framerate control
     timer->start(60);
@@ -267,19 +284,9 @@ void GLWidget::drawCube()
 }
 
 // ********************************* Obj Loader ***********************************
-void GLWidget::init_fdata()
-{
-std::ifstream ifile("ship/drmyogl1vqc1.obj");
-    while(ifile.good()){
-        fdata.push_back(ifile.get());
-    }
-
-    ifile.close();
-    init_vertex();
-}
-
-void GLWidget::init_vertex()
-{
-    std::string line;
-    std::getline(fdata, line);
+GLuint GLWidget::carregaModelo() {
+    glmUnitize(pmodel);
+    glmFacetNormals(pmodel);
+    glmVertexNormals(pmodel, 90.0);
+    glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
