@@ -67,7 +67,7 @@ void GLWidget::initializeGL() {
 
     // Upload Object
     if (!pmodel) {
-        pmodel = glmReadOBJ("data/f-16.obj");
+        pmodel = glmReadOBJ("data/ship.obj");
         if (!pmodel)
             exit(0);
     }
@@ -86,6 +86,7 @@ void GLWidget::resizeGL(int width, int height) {
     glLoadIdentity();// Reset
 }
 
+// ******************************* Painting ************************************
 // OpenGL painting code goes here
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -130,7 +131,6 @@ void GLWidget::paintGL() {
     glPopMatrix();
 
 
-
     //Carrega o Modelo do arquivo .obj
     glPushMatrix();
         //glTranslatef(0 + _Hdistance,0,-6+_Vdistance);
@@ -143,7 +143,7 @@ void GLWidget::paintGL() {
     timer->start(60);
 }
 
-// **************************** Handlers *********************************
+// ****************************** Handlers ***********************************
 
 // Key handler
 void GLWidget::keyPressEvent(QKeyEvent *event) {
@@ -252,6 +252,6 @@ GLuint GLWidget::loadTexture(QImage image) {
 GLuint GLWidget::carregaModelo() {
     glmUnitize(pmodel);
     glmFacetNormals(pmodel);
-    glmVertexNormals(pmodel, 90.0);
+    //glmVertexNormals(pmodel, 180.0);
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
