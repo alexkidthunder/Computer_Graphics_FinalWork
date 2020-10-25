@@ -1,5 +1,8 @@
 #include <QApplication>
 #include "glwidget.h"
+#include "game.h"
+
+Game * game;
 
 int main(int argc, char *argv[]) {
     // Construct a new Qt application
@@ -15,6 +18,9 @@ int main(int argc, char *argv[]) {
     GLWidget w;
     w.setMinimumSize(800, 600);
     w.show();
+
+    game = new Game();
+    game->show();
 
     // Let's roll!
     return a.exec();
