@@ -1,4 +1,5 @@
 debug/main.o
+debug/boss.o
 debug/bullet.o
 debug/enemy.o
 debug/game.o
@@ -9,6 +10,7 @@ debug/player.o
 debug/score.o
 debug/qrc_res.o
 debug/moc_glwidget.o
+debug/moc_boss.o
 debug/moc_bullet.o
 debug/moc_enemy.o
 debug/moc_player.o

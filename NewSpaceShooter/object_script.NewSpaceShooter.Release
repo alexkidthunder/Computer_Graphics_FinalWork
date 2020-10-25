@@ -1,4 +1,5 @@
 release/main.o
+release/boss.o
 release/bullet.o
 release/enemy.o
 release/game.o
@@ -9,6 +10,7 @@ release/player.o
 release/score.o
 release/qrc_res.o
 release/moc_glwidget.o
+release/moc_boss.o
 release/moc_bullet.o
 release/moc_enemy.o
 release/moc_player.o

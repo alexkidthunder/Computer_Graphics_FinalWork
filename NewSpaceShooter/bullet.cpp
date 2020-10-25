@@ -3,6 +3,7 @@
 #include <QGraphicsScene>
 #include <QList>
 #include "enemy.h"
+#include "boss.h"
 #include "game.h"
 
 extern Game * game; // there is an external global object called game
@@ -28,6 +29,21 @@ void Bullet::move(){
     // if one of the colliding items is an Enemy, destroy both the bullet and the enemy
     for (int i = 0, n = colliding_items.size(); i < n; ++i){
         if (typeid(*(colliding_items[i])) == typeid(Enemy)){
+            // increase the score
+            game->score->increase();
+
+            // remove them from the scene (still on the heap)
+            scene()->removeItem(colliding_items[i]);
+            scene()->removeItem(this);
+
+            // delete them from the heap to save memory
+            delete colliding_items[i];
+            delete this;
+
+            // return (all code below refers to a non existint bullet)
+            return;
+        }
+        else if (typeid(*(colliding_items[i])) == typeid(Boss)) {
             // increase the score
             game->score->increase();
 

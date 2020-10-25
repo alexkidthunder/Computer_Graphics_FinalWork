@@ -3,7 +3,7 @@
 #include <QGraphicsScene>
 #include <QList>
 #include <stdlib.h> // rand() -> really large int
-#include "Game.h"
+#include "game.h"
 
 extern Game * game;
 
@@ -13,7 +13,7 @@ Enemy::Enemy(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     setPos(random_number,0);
 
     // drew the rect
-    setPixmap(QPixmap(":/images/enemy1.png"));
+    setPixmap(QPixmap(":/images/enemy1.png"));    
     /*setTransformOriginPoint(50,50);
     setRotation(180);*/
 
@@ -22,7 +22,7 @@ Enemy::Enemy(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 
     // start the timer
-    timer->start(50);
+    timer->start(60);
 }
 
 void Enemy::move(){

@@ -7,6 +7,7 @@ TARGET = NewSpaceShooter
 TEMPLATE = app
 
 SOURCES +=  main.cpp \
+            boss.cpp \
             bullet.cpp \
             enemy.cpp \
             game.cpp \
@@ -17,6 +18,7 @@ SOURCES +=  main.cpp \
             score.cpp
 
 HEADERS +=  glwidget.h \
+            boss.h \
             bullet.h \
             enemy.h \
             game.h \

@@ -8,8 +8,7 @@
         <file>images/enemy1.png</file>
         <file>images/enemy2.png</file>
         <file>images/floor.png</file>
-        <file>images/ship.png</file>
         <file>images/ship01.png</file>
-        <file>images/ship02.png</file>
+        <file>images/Nship02.png</file>
     </qresource>
 </RCC>

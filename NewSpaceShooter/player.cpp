@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include "bullet.h"
 #include "enemy.h"
+#include "boss.h"
 
 Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent){
     bulletsound = new QMediaPlayer();
@@ -10,7 +11,7 @@ Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent){
     bulletsound->setVolume(30);
 
     //set graphic
-    setPixmap(QPixmap(":/images/ship.png"));
+    setPixmap(QPixmap(":/images/ship01.png"));
 }
 
 void Player::keyPressEvent(QKeyEvent *event){
@@ -45,5 +46,8 @@ void Player::spawn(){
     // create an enemy
     Enemy * enemy = new Enemy();
     scene()->addItem(enemy);
+    Boss * boss = new Boss();
+
+    scene()->addItem(boss);
 }
 

@@ -28,15 +28,15 @@ Game::Game(QWidget *parent){
     // add the player to the scene
     scene->addItem(player);
 
-    // create the score/health
+    // Create the score/health
     score = new Score();
     scene->addItem(score);
     health = new Health();
     health->setPos(health->x(),health->y()+25);
     scene->addItem(health);
+
     if (health->getHealth() == 0) {
         scene->removeItem(player);
-        exit(1);
     }
 
     // spawn enemies
