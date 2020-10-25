@@ -1,7 +1,15 @@
 <RCC>
-    <qresource prefix="/img"/>
     <qresource prefix="/">
         <file>sky.bmp</file>
         <file>floor.bmp</file>
+        <file>bg.wav</file>
+        <file>pew.wav</file>
+        <file>images/bullet.png</file>
+        <file>images/enemy1.png</file>
+        <file>images/enemy2.png</file>
+        <file>images/floor.png</file>
+        <file>images/ship.png</file>
+        <file>images/ship01.png</file>
+        <file>images/ship02.png</file>
     </qresource>
 </RCC>

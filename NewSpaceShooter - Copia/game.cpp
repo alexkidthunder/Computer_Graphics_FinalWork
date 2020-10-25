@@ -46,6 +46,7 @@ Game::Game(QWidget *parent){
     // play background music
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/bg.wav"));
+    music->setVolume(26);
     music->play();
 
     show();
