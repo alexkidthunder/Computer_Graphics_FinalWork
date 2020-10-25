@@ -9,6 +9,8 @@ extern "C" {
 }
 
 GLMmodel* pmodel = NULL;
+GLMmodel* emodel = NULL;
+GLMmodel* bmodel = NULL;
 
 // Constructor
 GLWidget::GLWidget() {
@@ -68,8 +70,10 @@ void GLWidget::initializeGL() {
     // Upload Object
     if (!pmodel) {
         pmodel = glmReadOBJ("data/ship.obj");
+        emodel = glmReadOBJ("data/enemy01.obj");
+        bmodel = glmReadOBJ("data/boss01.obj");
         if (!pmodel)
-            exit(0);
+            exit(0);        
     }
 }
 
@@ -137,8 +141,31 @@ void GLWidget::paintGL() {
         glTranslatef(0,0,-6);
         // Rotation relative to the object
         //glRotatef(_angle, 0.0, 1.0, 0.0);
-        carregaModelo();
+        loadModel();
     glPopMatrix();
+
+    // Take models
+
+    displayListHandle = glGenLists(1);
+    // Start recording the new display list.
+    glNewList(displayListHandle, GL_COMPILE);
+    // Render a single model
+    glTranslatef(0,0,-20);
+    loadEnemyModel();
+    glTranslatef(0,0,-10);
+    loadBossModel();
+    // End the recording of the current display list.
+    glEndList();
+
+     // Mounting the models
+
+    for (int y = 1 ; y <= 2 ; y++ ) {// y quantidades de naves por spawn
+        spawn(3,y,1);
+        glTranslatef(-1,0.5,0);
+        spawn(0,y,1);
+        glTranslatef(-1.5,0.5,0);
+        spawn(-3,y,1);
+    }
 
     timer->start(60);
 }
@@ -155,27 +182,6 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         // Toggle fullscreen on F1
         setWindowState(windowState() ^ Qt::WindowFullScreen);
         break;
-    /*case Qt::Key_A: // A Button
-        _angleH -= 1;
-        if (_angleH > 360)
-            _angleH = 0.0;
-        break;
-    case Qt::Key_D: // D Button
-        _angleH += 1;
-        if (_angleH > 360)
-            _angleH = 0.0;
-        break;
-    case Qt::Key_W: // A Button
-        _angleV -= 1;
-        if (_angleV > 360)
-            _angleV = 0.0;
-        break;
-    case Qt::Key_S: // D Button
-        _angleV += 1;
-        if (_angleV > 360)
-            _angleV = 0.0;
-        break;*/
-
     case Qt::Key_Left: // Left Button
         _Hdistance += 1;
         break;
@@ -229,6 +235,27 @@ void GLWidget::changeEvent(QEvent *event) {
     }
 }
 
+// **************************** Spawn handler *********************************
+
+void GLWidget::spawn(int h, int i, int y)
+{
+    int c = y; // height
+    // Assembling each model
+
+            for (int y = 0; y <= c ; y++ ) {
+                // Stack.
+                glPushMatrix();
+                // Position next enemy
+                glTranslatef( h , i , c );
+               /* glRotatef(40, 0.0, 0.0, 1.0);
+                glTranslatef( 1 , i , c );*/
+                // Call the display list which renders the model.
+                glCallList(displayListHandle);
+                // Remove current MODELVIEW Matrix from stack.
+                glPopMatrix();
+         }
+}
+
 // **************************** Texture handler *********************************
 
 GLuint GLWidget::loadTexture(QImage image) {
@@ -248,10 +275,27 @@ GLuint GLWidget::loadTexture(QImage image) {
     return textureId; //Returns the id of the texture
 }
 
+// **************************** Upload handler *********************************
+
 // Upload Model
-GLuint GLWidget::carregaModelo() {
+GLuint GLWidget::loadModel() {
     glmUnitize(pmodel);
     glmFacetNormals(pmodel);
     //glmVertexNormals(pmodel, 180.0);
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
+}
+// Upload Enemy Model
+GLuint GLWidget::loadEnemyModel() {
+    glmUnitize(emodel);
+    glmFacetNormals(emodel);
+    //glmVertexNormals(pmodel, 180.0);
+    glmDraw(emodel, GLM_SMOOTH | GLM_MATERIAL);
+}
+// Upload Boss Model
+GLuint GLWidget::loadBossModel()
+{
+    glmUnitize(bmodel);
+    glmFacetNormals(bmodel);
+    //glmVertexNormals(pmodel, 180.0);
+    glmDraw(bmodel, GLM_SMOOTH | GLM_MATERIAL);
 }

@@ -22,6 +22,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);
+    void spawn(int h, int i, int y);
 
 private:
     float _angleH = 0.0;
@@ -31,11 +32,14 @@ private:
     bool lightChanged;
     int m_xRot= 0.0;
     int m_yRot= 0.0;
+    int displayListHandle = -1;
 
     QPoint m_lastPos;
 
     GLuint loadTexture(QImage image);
-    GLuint carregaModelo();
+    GLuint loadModel();
+    GLuint loadEnemyModel();
+    GLuint loadBossModel();
 
     QTimer *timer;
 
