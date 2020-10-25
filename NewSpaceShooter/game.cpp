@@ -7,46 +7,50 @@
 #include <QMediaPlaylist>
 
 Game::Game(QWidget *parent){
-    // create the scene
+
+    // Create Scene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,800,600); // make the scene 800x600 instead of infinity by infinity (default)
+    scene->setSceneRect( 0, 0, 800, 600 ); // Make the scene 800x600
+    // Set the Background
     setBackgroundBrush(QBrush(QImage(":/images/floor.png")));
 
-    // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
-    // it can be used to visualize scenes)
+    // Make scene the scene to visualize.
     setScene(scene);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800,600);
 
-    // create the player
+    // Create the player
     player = new Player();
-    player->setPos(400,500); // TODO generalize to always be in the middle bottom of screen
-    // make the player focusable and set it to be the current focus
+    player->setPos(400,500);// Generalize to always be in the middle bottom
+
+    // Make the player be the focus
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
-    // add the player to the scene
+
+    // Add the player
     scene->addItem(player);
 
-    // Create the score/health
+    // Create and add the score and health
     score = new Score();
     scene->addItem(score);
     health = new Health();
     health->setPos(health->x(),health->y()+25);
     scene->addItem(health);
 
+    // Test Game over
     if (health->getHealth() == 0) {
         scene->removeItem(player);
+        delete player;
     }
 
-    // spawn enemies
+    // Spawn enemies with time
     QTimer * timer = new QTimer();
     QObject::connect(timer,SIGNAL(timeout()),player,SLOT(spawn()));
     timer->start(2000);
 
     // Play background music
-
-    QMediaPlaylist *playlist = new QMediaPlaylist();//Loop
+    QMediaPlaylist *playlist = new QMediaPlaylist();// Loop
     playlist->addMedia(QUrl("qrc:/bg.wav"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 

@@ -5,9 +5,10 @@
 #include <QTimer>
 
 extern "C" {
-    #include "glm.h"
+#include "glm.h"
 }
 
+// Player, Enemy, Boss models
 GLMmodel* pmodel = NULL;
 GLMmodel* emodel = NULL;
 GLMmodel* bmodel = NULL;
@@ -16,10 +17,10 @@ GLMmodel* bmodel = NULL;
 GLWidget::GLWidget() {
     setWindowTitle("NewSpaceShooter");
 
-    lightChanged = false;
     timer = new QTimer(this);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    lightChanged = false;
 }
 
 // Destructor
@@ -28,21 +29,21 @@ GLWidget::~GLWidget() {
     glDeleteTextures(1, &_textureSky);
 }
 
-// *************************** Screen Initialization *********************************
+// **************************** Screen Initialization ************************************
 
 // Initialize OpenGL
 void GLWidget::initializeGL() {
-    glShadeModel(GL_SMOOTH);    // Enable smooth shading
-    qglClearColor(Qt::black);   // Set the clear color to a black background
+    glShadeModel(GL_SMOOTH); // Enable smooth shading
+    qglClearColor(Qt::black);// Set the clear color to a black background
 
-    glClearDepth(1.0f);     // Depth buffer setup
-    glEnable(GL_DEPTH_TEST);// Enable depth testing
-    glDepthFunc(GL_LEQUAL); // Set type of depth test
+    glClearDepth(1.0f);      // Depth buffer setup
+    glEnable(GL_DEPTH_TEST); // Enable depth testing
+    glDepthFunc(GL_LEQUAL);  // Set type of depth test
 
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really nice perspective calculations
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);// Really nice perspective calculations
 
-    glMatrixMode(GL_PROJECTION);// To operate on the Projection matrix
-    glLoadIdentity();// Reset
+    glMatrixMode(GL_PROJECTION);// To operate on the projection matrix
+    glLoadIdentity();        // Reset
 
     glEnable(GL_TEXTURE_2D); // Habilitar TEXTURE 2D
 
@@ -51,12 +52,15 @@ void GLWidget::initializeGL() {
     GLfloat ambLight[] = {0.4f, 0.4f, 0.4f, 1.0f};
     GLfloat diffLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat lightPos[] = {10.0f, 10.0f, 60.0f, 1.0f};
+
     // Add ambient lighting
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffLight);
+
     // Add positioned lighting
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
+    // Enable
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
@@ -73,93 +77,91 @@ void GLWidget::initializeGL() {
         emodel = glmReadOBJ("data/enemy01.obj");
         bmodel = glmReadOBJ("data/boss01.obj");
         if (!pmodel)
-            exit(0);        
+            exit(0);
     }
 }
 
-// This is called when the OpenGL window is resized
+// When the OpenGL window is resized this is called
 void GLWidget::resizeGL(int width, int height) {
     const float ar = (float) width / (float) height;
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);// To operate on the Projection matrix
-    glLoadIdentity();// Reset
+    glLoadIdentity();           // Reset
     // Perspective projection:(fovy, aspect, near, far),Calculate the aspect ratio
     //gluPerspective(60.0f, static_cast<GLfloat>(width)/height, 0.1f, 100.0f);
     glFrustum(-ar, ar, -1.0, 1.0, 2.0, 100.0);
-    glMatrixMode(GL_MODELVIEW);// To operate on model-view matrix
-    glLoadIdentity();// Reset
+    glMatrixMode(GL_MODELVIEW); // To operate on model-view matrix
+    glLoadIdentity();           // Reset
 }
 
 // ******************************* Painting ************************************
-// OpenGL painting code goes here
+
+// OpenGL painting code
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Movement in paused clicks, remove for continuous movement
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity(); // Reset
+    glLoadIdentity();// Reset
 
-    // Sky
+    // Sky texture
     glPushMatrix();
-        glBindTexture(GL_TEXTURE_2D, _textureSky);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTranslatef(0,0,-80);
-        glBegin(GL_QUADS);
-            glTexCoord3f(0.0,1.0,0.1);  glVertex3f(-80,80,0);
-            glTexCoord3f(1.0,1.0,0.1);  glVertex3f(80,80,0);
-            glTexCoord3f(1.0,0.0,0.1);  glVertex3f(80,-80,0);
-            glTexCoord3f(0.0,0.0,0.1);  glVertex3f(-80,-80,0);
-        glEnd();
+    glBindTexture(GL_TEXTURE_2D, _textureSky);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTranslatef(0,0,-80);
+    glBegin(GL_QUADS);
+    glTexCoord3f(0.0,1.0,0.1);  glVertex3f(-80,80,0);
+    glTexCoord3f(1.0,1.0,0.1);  glVertex3f(80,80,0);
+    glTexCoord3f(1.0,0.0,0.1);  glVertex3f(80,-80,0);
+    glTexCoord3f(0.0,0.0,0.1);  glVertex3f(-80,-80,0);
+    glEnd();
     glPopMatrix();
 
     glTranslatef(_Hdistance,0,_Vdistance);
+
     // Rotation relative to the view
     glRotatef(m_xRot / 100.0f, 0.0, 1.0, 0.0);
     glRotatef(m_yRot / 100.0f, 1.0, 0.0, 0.0);
 
-    // Floor
+    // Floor texture
     glPushMatrix();
-        glBindTexture(GL_TEXTURE_2D, _textureFloor);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTranslatef(0,0,-6);
-        // Rotation relative to the floor
-        //glRotatef(_angle, 0.0, 1.0, 0.0);
-        glBegin(GL_QUADS);
-            glTexCoord3f(0.0,70.0,1);  glVertex3f(-50,-1.5,50);
-            glTexCoord3f(0.0,0.0,-1);  glVertex3f(-50,-1.5,-50);
-            glTexCoord3f(70.0,0.0,-1);  glVertex3f(50,-1.5,-50);
-            glTexCoord3f(70.0,70.0,1);  glVertex3f(50,-1.5,50);
-        glEnd();
+    glBindTexture(GL_TEXTURE_2D, _textureFloor);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTranslatef(0,0,-6);
+    //glRotatef(_angle, 0.0, 1.0, 0.0);// Rotation relative to the floor
+    glBegin(GL_QUADS);
+    glTexCoord3f(0.0,70.0,1);  glVertex3f(-50,-1.5,50);
+    glTexCoord3f(0.0,0.0,-1);  glVertex3f(-50,-1.5,-50);
+    glTexCoord3f(70.0,0.0,-1);  glVertex3f(50,-1.5,-50);
+    glTexCoord3f(70.0,70.0,1);  glVertex3f(50,-1.5,50);
+    glEnd();
     glPopMatrix();
-
 
     //Carrega o Modelo do arquivo .obj
     glPushMatrix();
-        //glTranslatef(0 + _Hdistance,0,-6+_Vdistance);
-        glTranslatef(0,0,-6);
-        // Rotation relative to the object
-        //glRotatef(_angle, 0.0, 1.0, 0.0);
-        loadModel();
+    //glTranslatef(0 + _Hdistance,0,-6+_Vdistance);
+    glTranslatef(0,0,-6);
+    //glRotatef(_angle, 0.0, 1.0, 0.0);// Rotation relative to the object
+    loadModel();
     glPopMatrix();
 
-    // Take models
+    // Put models in list
 
     displayListHandle = glGenLists(1);
     // Start recording the new display list.
     glNewList(displayListHandle, GL_COMPILE);
-    // Render a single model
     glTranslatef(0,0,-20);
-    loadEnemyModel();
+    loadEnemyModel();// Render a single model
     glTranslatef(0,0,-10);
-    loadBossModel();
+    loadBossModel();// Render a single model
     // End the recording of the current display list.
     glEndList();
 
-     // Mounting the models
+    // Mounting the models
 
-    for (int y = 1 ; y <= 2 ; y++ ) {// y quantidades de naves por spawn
+    for (int y = 1 ; y <= 2 ; y++ ) {// Y quantities of ships per spawn
         spawn(3,y,1);
         glTranslatef(-1,0.5,0);
         spawn(0,y,1);
@@ -176,25 +178,25 @@ void GLWidget::paintGL() {
 void GLWidget::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
     case Qt::Key_Escape:
-        close(); // Quit on Escape
+        close();        // Quit on Escape
         break;
     case Qt::Key_F1:
         // Toggle fullscreen on F1
         setWindowState(windowState() ^ Qt::WindowFullScreen);
         break;
-    case Qt::Key_Left: // Left Button
+    case Qt::Key_Left:  // Left Button
         _Hdistance += 1;
         break;
     case Qt::Key_Right: // Right Button
         _Hdistance -= 1;
         break;
-    case Qt::Key_Up: // Up Button
+    case Qt::Key_Up:    // Up Button
         _Vdistance += 1;
         break;
-    case Qt::Key_Down: // Down Button
+    case Qt::Key_Down:  // Down Button
         _Vdistance -= 1;
         break;
-    case Qt::Key_L: // LIGHTING    ON / OFF
+    case Qt::Key_L:     // LIGHTING OFF / ON
         if (glIsEnabled(GL_LIGHTING))
             glDisable(GL_LIGHTING);
         else
@@ -207,10 +209,11 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+// Mouse handler
 void GLWidget::mousePressEvent(QMouseEvent *event){
     m_lastPos=event->pos();
 }
-\
+// /
 void GLWidget::mouseMoveEvent(QMouseEvent *event){
     int dx=event->x()-m_lastPos.x();
     int dy=event->y()-m_lastPos.y();
@@ -223,40 +226,39 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
 // Event handler
 void GLWidget::changeEvent(QEvent *event) {
     switch (event->type()) {
-        case QEvent::WindowStateChange:
-            // Hide cursor if the window is fullscreen, otherwise show it
-            if (windowState() == Qt::WindowFullScreen)
-                setCursor(Qt::BlankCursor);
-            else
-                unsetCursor();
-            break;
-        default:
-            break;
+    case QEvent::WindowStateChange:
+        // Hide cursor if the window is fullscreen, otherwise show it
+        if (windowState() == Qt::WindowFullScreen)
+            setCursor(Qt::BlankCursor);
+        else
+            unsetCursor();
+        break;
+    default:
+        break;
     }
 }
 
-// **************************** Spawn handler *********************************
+// ****************************** Spawn handler **********************************
 
 void GLWidget::spawn(int h, int i, int y)
 {
-    int c = y; // height
+    int c = y;  // Height
+
     // Assembling each model
 
-            for (int y = 0; y <= c ; y++ ) {
-                // Stack.
-                glPushMatrix();
-                // Position next enemy
-                glTranslatef( h , i , c );
-               /* glRotatef(40, 0.0, 0.0, 1.0);
-                glTranslatef( 1 , i , c );*/
-                // Call the display list which renders the model.
-                glCallList(displayListHandle);
-                // Remove current MODELVIEW Matrix from stack.
-                glPopMatrix();
-         }
+    for (int y = 0; y <= c ; y++ ) {
+        // Stack.
+        glPushMatrix();
+        // Position next enemy
+        glTranslatef( h , i , c );
+        /*glRotatef(40, 0.0, 0.0, 1.0);
+        glTranslatef( 1 , i , c );*/
+        glCallList(displayListHandle);// Call the display list which renders the model.
+        glPopMatrix();// Remove current MODELVIEW Matrix from stack.
+    }
 }
 
-// **************************** Texture handler *********************************
+// ***************************** Texture handler **********************************
 
 GLuint GLWidget::loadTexture(QImage image) {
     GLuint textureId;
@@ -270,32 +272,34 @@ GLuint GLWidget::loadTexture(QImage image) {
                  0,                            //The border of the image
                  GL_RGBA, //GL_RGB, because pixels are stored in RGB format
                  GL_UNSIGNED_BYTE, //GL_UNSIGNED_BYTE, because pixels are stored
-                                   //as unsigned numbers
+                 //as unsigned numbers
                  image.bits());               //The actual pixel data
     return textureId; //Returns the id of the texture
 }
 
-// **************************** Upload handler *********************************
+// ****************************** Upload handler ***********************************
 
 // Upload Model
 GLuint GLWidget::loadModel() {
     glmUnitize(pmodel);
     glmFacetNormals(pmodel);
-    //glmVertexNormals(pmodel, 180.0);
+    glmVertexNormals(pmodel, 90.0);
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
+
 // Upload Enemy Model
 GLuint GLWidget::loadEnemyModel() {
     glmUnitize(emodel);
     glmFacetNormals(emodel);
-    //glmVertexNormals(pmodel, 180.0);
+    glmVertexNormals(pmodel, 180.0);
     glmDraw(emodel, GLM_SMOOTH | GLM_MATERIAL);
 }
+
 // Upload Boss Model
 GLuint GLWidget::loadBossModel()
 {
     glmUnitize(bmodel);
     glmFacetNormals(bmodel);
-    //glmVertexNormals(pmodel, 180.0);
+    glmVertexNormals(pmodel, 180.0);
     glmDraw(bmodel, GLM_SMOOTH | GLM_MATERIAL);
 }

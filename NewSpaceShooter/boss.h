@@ -7,8 +7,10 @@
 
 class Boss: public QObject,public QGraphicsPixmapItem{
     Q_OBJECT
+
 public:
     Boss(QGraphicsItem * parent=0);
+
 public slots:
     void move();
 };

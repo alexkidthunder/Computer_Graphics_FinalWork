@@ -2,38 +2,39 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QList>
-#include <stdlib.h> // rand() -> really large int
+#include <stdlib.h>
 #include "game.h"
 
 extern Game * game;
 
 Boss::Boss(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
-    //set random x position
+    // Set random position X
     int random_number = rand() % 600;
     setPos(random_number,0);
 
-    // drew the rect
+    // Drew the enemy
     setPixmap(QPixmap(":/images/enemy2.png"));
+    // Image rotation
     setTransformOriginPoint(50,50);
     setRotation(180);
 
-    // make/connect a timer to move() the enemy every so often
+    // Timer to move the enemy
     QTimer * timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(move()));
+    connect( timer,SIGNAL(timeout()), this , SLOT(move()));
 
-    // start the timer
+    // Timer Start
     timer->start(160);
 }
 
 void Boss::move(){
-    // move enemy down
-    setPos(x(),y()+5);
+    // Move enemy
+    setPos( x( ), y()+5 );
 
-    // destroy enemy when it goes out of the screen
-    if (pos().y() > 600){
-        //decrease the health
+    // Destroy enemy out of the screen
+    if ( pos().y() > 600 ){
+        // Decrease health
         game->health->decrease();
-
+        // Remove enemy
         scene()->removeItem(this);
         delete this;
     }

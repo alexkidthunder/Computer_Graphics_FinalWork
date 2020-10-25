@@ -6,63 +6,63 @@
 #include "boss.h"
 #include "game.h"
 
-extern Game * game; // there is an external global object called game
+extern Game * game; // External global object game
 
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsRectItem(parent){
-    // drew the bullet
-    setRect(45,-30,15,15);
+    // Drew the bullet
+    setRect(45,-30,15,15); // Literaly draw
     //setPixmap(QPixmap(":/images/bullet.png"));
 
 
-    // make/connect a timer to move() the bullet every so often
+    // Make a timer to move the bullet
     QTimer * timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 
-    // start the timer
+    // Start the timer
     timer->start(50);
 }
 
 void Bullet::move(){
-    // get a list of all the items currently colliding with this bullet
+    // Get a list of all the items currently colliding with this bullet
     QList<QGraphicsItem *> colliding_items = collidingItems();
 
-    // if one of the colliding items is an Enemy, destroy both the bullet and the enemy
+    // If one of the colliding items is an Enemy, destroy both
     for (int i = 0, n = colliding_items.size(); i < n; ++i){
         if (typeid(*(colliding_items[i])) == typeid(Enemy)){
-            // increase the score
+            // Increase the score
             game->score->increase();
 
-            // remove them from the scene (still on the heap)
+            // Remove from the scene
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
 
-            // delete them from the heap to save memory
+            // Delete them from the heap
             delete colliding_items[i];
             delete this;
 
-            // return (all code below refers to a non existint bullet)
+            // Return
             return;
         }
         else if (typeid(*(colliding_items[i])) == typeid(Boss)) {
-            // increase the score
+            // Increase the score
             game->score->increase();
 
-            // remove them from the scene (still on the heap)
+            // Remove from the scene
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
 
-            // delete them from the heap to save memory
+            // Delete them from the heap
             delete colliding_items[i];
             delete this;
 
-            // return (all code below refers to a non existint bullet)
+            // Return (all code below refers to a non existint bullet)
             return;
         }
     }
 
-    // if there was no collision with an Enemy, move the bullet forward
+    // No collision with an Enemy, move the bullet
     setPos(x(),y()-10);
-    // if the bullet is off the screen, destroy it
+    // if the bullet is off the screen, destroy the bullet
     if (pos().y() < 0){
         scene()->removeItem(this);
         delete this;
