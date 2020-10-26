@@ -46,8 +46,3 @@ unix {
         -lGL \
         -lGLU
 }
-
-DISTFILES +=
-
-
-

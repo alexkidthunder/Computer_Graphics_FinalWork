@@ -30,7 +30,7 @@ private:
     float _angleV = 0.0;
     float _Vdistance = 0.0;
     float _Hdistance = 0.0;
-    float _angle = 15.0;   
+    float _angle = 16.0;
     float _setPos = 0.0;
 
     int m_xRot= 0.0;

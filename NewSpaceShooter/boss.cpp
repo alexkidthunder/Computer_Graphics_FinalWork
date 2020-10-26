@@ -8,6 +8,7 @@
 extern Game * game;
 
 Boss::Boss(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
+
     // Set random position X
     int random_number = rand() % 600;
     setPos(random_number,0);
@@ -27,6 +28,7 @@ Boss::Boss(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
 }
 
 void Boss::move(){
+
     // Move enemy
     setPos( x( ), y()+5 );
 

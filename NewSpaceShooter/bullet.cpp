@@ -10,10 +10,8 @@ extern Game * game; // External global object game
 
 Bullet::Bullet(QGraphicsItem *parent): QObject(),QGraphicsPixmapItem(parent){
     // Drew the bullet
-    //setRect(45,-30,15,15); // Literaly draw
     setPixmap(QPixmap(":/images/bullet.png"));
     setPos(x()+15,y()+15);
-
 
     // Make a timer to move the bullet
     QTimer * timer = new QTimer(this);
@@ -54,8 +52,6 @@ void Bullet::move(){
             delete colliding_items[i];
             delete this;
 
-
-
             // Return
             return;
         }
@@ -84,9 +80,9 @@ void Bullet::move(){
         }
     }
 
-    // No collision with an Enemy, move the bullet
+    // Case there was no collision with an Enemy, move the bullet
     setPos(x(),y()-10);
-    // if the bullet is off the screen, destroy the bullet
+    // If the bullet is off the screen, destroy the bullet
     if (pos().y() < 0){
         scene()->removeItem(this);
         delete this;

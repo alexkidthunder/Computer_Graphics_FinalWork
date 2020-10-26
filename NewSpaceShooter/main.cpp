@@ -15,11 +15,12 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Create and show our OpenGL window
+    // Create and show OpenGL window
     GLWidget w;
     w.setMinimumSize(800, 600);
     w.show();
 
+    // Create and show 2D window
     game = new Game();
     game->show();
 

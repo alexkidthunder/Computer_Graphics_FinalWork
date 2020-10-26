@@ -43,11 +43,12 @@ Game::Game(QWidget *parent){
     QObject::connect(timer,SIGNAL(timeout()),player,SLOT(spawn()));
     timer->start(2000);
 
-    // Play background music
+    // Upload background music
     QMediaPlaylist *playlist = new QMediaPlaylist();// Loop
     playlist->addMedia(QUrl("qrc:/bg.wav"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
+    // Play background music
     QMediaPlayer * music = new QMediaPlayer();
     //music->setMedia(QUrl("qrc:/bg.wav"));// Single Play
     music->setPlaylist(playlist);// Config Loop

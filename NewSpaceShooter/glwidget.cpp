@@ -8,7 +8,7 @@ extern "C" {
 #include "glm.h"
 }
 
-// Player, Enemy, Boss models
+// Player, Enemy, Bullet and Boss models
 GLMmodel* pmodel = NULL;
 GLMmodel* emodel = NULL;
 GLMmodel* bmodel = NULL;
@@ -21,7 +21,7 @@ GLWidget::GLWidget() {
     setWindowTitle("NewSpaceShooter");
 
     timer = new QTimer(this);
-    //timer->setSingleShot(true);
+    timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
 
     lightChanged = false;
@@ -93,7 +93,6 @@ void GLWidget::resizeGL(int width, int height) {
     glMatrixMode(GL_PROJECTION);// To operate on the Projection matrix
     glLoadIdentity();           // Reset
     // Perspective projection:(fovy, aspect, near, far),Calculate the aspect ratio
-    //gluPerspective(60.0f, static_cast<GLfloat>(width)/height, 0.1f, 100.0f);
     glFrustum(-ar, ar, -1.0, 1.0, 2.0, 100.0);
     glMatrixMode(GL_MODELVIEW); // To operate on model-view matrix
     glLoadIdentity();           // Reset
@@ -158,25 +157,21 @@ void GLWidget::paintGL() {
     glTranslatef(0,0,-1.5);
     glScalef(0.25,0.25,0.25);
     glTranslatef(0,-0.5,_bulletDist);
-
     loadBulletModel();
-
     glPopMatrix();
 
     // Put models in list
-
     listHandleDisp = glGenLists(1);
     // Start recording the new display list.
     glNewList(listHandleDisp, GL_COMPILE);
     glTranslatef(0,0,-20);
     loadEnemyModel();// Render a single model
     glTranslatef(0,0,-10);
-    loadBossModel();// Render a single model
+    loadBossModel(); // Render a single model
     // End the recording of the current display list.
     glEndList();
 
     // Mounting the models
-
     for (int y = 1 ; y <= 2 ; y++ ) {// Y quantities of ships per spawn
         spawn(3,y,1);
         glTranslatef(-1,0.5,0);
@@ -184,7 +179,6 @@ void GLWidget::paintGL() {
         glTranslatef(-1.5,0.5,0);
         spawn(-3,y,1);
     }
-
     timer->start(60);
 }
 
@@ -258,10 +252,9 @@ void GLWidget::changeEvent(QEvent *event) {
 
 void GLWidget::spawn(int h, int i, int y)
 {
-    int c = y;  // Height
+    int c = y;  // Lines
 
     // Assembling each model
-
     for (int y = 0; y <= c ; y++ ) {
         // Stack.
         glPushMatrix();
@@ -279,9 +272,7 @@ void GLWidget::spawn(int h, int i, int y)
 void GLWidget::update()
 {
     _bulletDist -= 0.07f;
-    if (_bulletDist > 360) {
-        _bulletDist -= 360;
-    }
+
 }
 
 // ****************************** Texture handler ************************************
