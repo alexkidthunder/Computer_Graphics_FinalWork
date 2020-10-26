@@ -155,7 +155,7 @@ void GLWidget::paintGL() {
     loadModel();
 
     // Configurations
-    glTranslatef(0,0,-1.7);
+    glTranslatef(0,0,-1.6);
     glScalef(0.25,0.25,0.25);
     glTranslatef(0,-0.5,_bulletDist);
 
