@@ -14,6 +14,8 @@ GLMmodel* emodel = NULL;
 GLMmodel* bmodel = NULL;
 GLMmodel* bulletmodel = NULL;
 
+float _bulletDist = 0.0f;
+
 // Constructor
 GLWidget::GLWidget() {
     setWindowTitle("NewSpaceShooter");
@@ -148,17 +150,14 @@ void GLWidget::paintGL() {
     glTranslatef(0,0,-6);
     //glRotatef(_angle, 0.0, 1.0, 0.0);// Rotation relative to the object
     glRotatef(_angle, 0.9, 0.0, 0.0);
+    update();
 
     loadModel();
 
     // Configurations
-    glTranslatef(0,0,-1.6);
-    glScalef(0.3,0.3,0.3);
+    glTranslatef(0,0,-1.7);
+    glScalef(0.25,0.25,0.25);
     glTranslatef(0,-0.5,_bulletDist);
-
-
-
-
 
     loadBulletModel();
 
@@ -212,9 +211,6 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         break;
     case Qt::Key_Down:  // Down Button
         _Vdistance -= 1;
-        break;
-    case Qt::Key_W:    // Up Button
-        _bulletDist -= 1;
         break;
     case Qt::Key_L:     // LIGHTING OFF / ON
         if (glIsEnabled(GL_LIGHTING))
@@ -275,6 +271,16 @@ void GLWidget::spawn(int h, int i, int y)
         glTranslatef( 1 , i , c );*/
         glCallList(listHandleDisp);// Call the display list which renders the model.
         glPopMatrix();// Remove current MODELVIEW Matrix from stack.
+    }
+}
+
+// ****************************** Update handler ************************************
+
+void GLWidget::update()
+{
+    _bulletDist -= 0.07f;
+    if (_bulletDist > 360) {
+        _bulletDist -= 360;
     }
 }
 

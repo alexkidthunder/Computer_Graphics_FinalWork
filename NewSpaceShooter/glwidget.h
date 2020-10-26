@@ -23,6 +23,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);
     void spawn(int h, int i, int y);
+    void update();
 
 private:
     float _angleH = 0.0;
@@ -31,7 +32,6 @@ private:
     float _Hdistance = 0.0;
     float _angle = 15.0;   
     float _setPos = 0.0;
-    float _bulletDist = 0.0;
 
     int m_xRot= 0.0;
     int m_yRot= 0.0;
