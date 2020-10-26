@@ -12,6 +12,7 @@ extern "C" {
 GLMmodel* pmodel = NULL;
 GLMmodel* emodel = NULL;
 GLMmodel* bmodel = NULL;
+GLMmodel* bulletmodel = NULL;
 
 // Constructor
 GLWidget::GLWidget() {
@@ -76,6 +77,7 @@ void GLWidget::initializeGL() {
         pmodel = glmReadOBJ("data/ship.obj");
         emodel = glmReadOBJ("data/enemy01.obj");
         bmodel = glmReadOBJ("data/boss01.obj");
+        bulletmodel = glmReadOBJ("data/bullet.obj");
         if (!pmodel)
             exit(0);
     }
@@ -144,14 +146,19 @@ void GLWidget::paintGL() {
     //glTranslatef(0 + _Hdistance,0,-6+_Vdistance);
     glTranslatef(0,0,-6);
     //glRotatef(_angle, 0.0, 1.0, 0.0);// Rotation relative to the object
+    glRotatef(_angle, 0.9, 0.0, 0.0);
     loadModel();
+    glTranslatef(0,0,-1.6);
+    glScalef(0.3,0.3,0.3);
+    glTranslatef(0,-0.5,0);
+    loadBulletModel();
     glPopMatrix();
 
     // Put models in list
 
-    displayListHandle = glGenLists(1);
+    listHandleDisp = glGenLists(1);
     // Start recording the new display list.
-    glNewList(displayListHandle, GL_COMPILE);
+    glNewList(listHandleDisp, GL_COMPILE);
     glTranslatef(0,0,-20);
     loadEnemyModel();// Render a single model
     glTranslatef(0,0,-10);
@@ -253,7 +260,7 @@ void GLWidget::spawn(int h, int i, int y)
         glTranslatef( h , i , c );
         /*glRotatef(40, 0.0, 0.0, 1.0);
         glTranslatef( 1 , i , c );*/
-        glCallList(displayListHandle);// Call the display list which renders the model.
+        glCallList(listHandleDisp);// Call the display list which renders the model.
         glPopMatrix();// Remove current MODELVIEW Matrix from stack.
     }
 }
@@ -303,3 +310,13 @@ GLuint GLWidget::loadBossModel()
     glmVertexNormals(pmodel, 180.0);
     glmDraw(bmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
+
+// Upload Bullet Model
+GLuint GLWidget::loadBulletModel()
+{
+    glmUnitize(bulletmodel);
+    glmFacetNormals(bulletmodel);
+    glmVertexNormals(bulletmodel, 180.0);
+    glmDraw(bulletmodel, GLM_SMOOTH | GLM_MATERIAL);
+}
+

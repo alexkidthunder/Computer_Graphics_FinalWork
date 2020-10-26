@@ -29,20 +29,23 @@ private:
     float _angleV = 0.0;
     float _Vdistance = 0.0;
     float _Hdistance = 0.0;
-    bool lightChanged;
+    float _angle = 15.0;
+
     int m_xRot= 0.0;
     int m_yRot= 0.0;
-    int displayListHandle = -1;
+    int listHandleDisp = -1;
+
+    bool lightChanged;
 
     QPoint m_lastPos;
+
+    QTimer *timer;
 
     GLuint loadTexture(QImage image);
     GLuint loadModel();
     GLuint loadEnemyModel();
     GLuint loadBossModel();
-
-    QTimer *timer;
-
+    GLuint loadBulletModel();
     GLuint  _textureFloor,
             _textureSky;
 };
