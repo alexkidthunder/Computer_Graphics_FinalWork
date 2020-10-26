@@ -19,8 +19,9 @@ GLWidget::GLWidget() {
     setWindowTitle("NewSpaceShooter");
 
     timer = new QTimer(this);
-    timer->setSingleShot(true);
+    //timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+
     lightChanged = false;
 }
 
@@ -147,11 +148,17 @@ void GLWidget::paintGL() {
     glTranslatef(0,0,-6);
     //glRotatef(_angle, 0.0, 1.0, 0.0);// Rotation relative to the object
     glRotatef(_angle, 0.9, 0.0, 0.0);
+
     loadModel();
+
+    // Configurations
     glTranslatef(0,0,-1.6);
     glScalef(0.3,0.3,0.3);
     glTranslatef(0,-0.5,0);
+
+
     loadBulletModel();
+
     glPopMatrix();
 
     // Put models in list

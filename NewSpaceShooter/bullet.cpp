@@ -8,10 +8,11 @@
 
 extern Game * game; // External global object game
 
-Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsRectItem(parent){
+Bullet::Bullet(QGraphicsItem *parent): QObject(),QGraphicsPixmapItem(parent){
     // Drew the bullet
-    setRect(45,-30,15,15); // Literaly draw
-    //setPixmap(QPixmap(":/images/bullet.png"));
+    //setRect(45,-30,15,15); // Literaly draw
+    setPixmap(QPixmap(":/images/bullet.png"));
+    setPos(x()+15,y()+15);
 
 
     // Make a timer to move the bullet

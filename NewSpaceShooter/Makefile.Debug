@@ -674,7 +674,6 @@ debug/moc_player.cpp: player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qimage.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qpixelformat.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtransform.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -697,6 +696,7 @@ debug/moc_player.cpp: player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.14.2\5.14.2\mingw73_64\bin\moc.exe $(DEFINES) --include "C:/Users/Alexandre R. C/Documents/GitHub/Computer_Graphics_FinalWork/NewSpaceShooter/debug/moc_predefs.h" -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/mkspecs/win32-g++ -I"C:/Users/Alexandre R. C/Documents/GitHub/Computer_Graphics_FinalWork/NewSpaceShooter" -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtOpenGL -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore -IC:/Qt/Qt5.14.2/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.14.2/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.14.2/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.14.2/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.14.2/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.14.2/Tools/mingw730_64/x86_64-w64-mingw32/include player.h -o debug\moc_player.cpp
@@ -861,10 +861,9 @@ debug/main.o: main.cpp C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QAppli
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsScene \
-		Player.h \
+		player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsPixmapItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsitem.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -885,12 +884,13 @@ debug/main.o: main.cpp C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QAppli
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
-		Score.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
+		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
-		Health.h
+		health.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o main.cpp
 
-debug/boss.o: boss.cpp enemy.h \
+debug/boss.o: boss.cpp boss.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsRectItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1014,7 +1014,7 @@ debug/boss.o: boss.cpp enemy.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
-		Player.h \
+		player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsPixmapItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -1035,9 +1035,9 @@ debug/boss.o: boss.cpp enemy.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
-		Score.h \
+		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
-		Health.h
+		health.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\boss.o boss.cpp
 
 debug/bullet.o: bullet.cpp bullet.h \
@@ -1143,6 +1143,7 @@ debug/bullet.o: bullet.cpp bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QList \
 		enemy.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsRectItem \
+		boss.h \
 		game.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsView \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsview.h \
@@ -1166,7 +1167,7 @@ debug/bullet.o: bullet.cpp bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
-		Player.h \
+		player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaobject.h \
@@ -1186,9 +1187,9 @@ debug/bullet.o: bullet.cpp bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
-		Score.h \
+		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
-		Health.h
+		health.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\bullet.o bullet.cpp
 
 debug/enemy.o: enemy.cpp enemy.h \
@@ -1315,7 +1316,7 @@ debug/enemy.o: enemy.cpp enemy.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
-		Player.h \
+		player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsPixmapItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -1336,9 +1337,9 @@ debug/enemy.o: enemy.cpp enemy.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
-		Score.h \
+		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
-		Health.h
+		health.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\enemy.o enemy.cpp
 
 debug/game.o: game.cpp game.h \
@@ -1456,10 +1457,9 @@ debug/game.o: game.cpp game.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsScene \
-		Player.h \
+		player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsPixmapItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsitem.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -1480,9 +1480,10 @@ debug/game.o: game.cpp game.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
-		Score.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
+		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
-		Health.h \
+		health.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QTimer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qtimer.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qbasictimer.h \
@@ -1814,7 +1815,6 @@ debug/player.o: player.cpp player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qimage.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qpixelformat.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtransform.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
@@ -1837,6 +1837,7 @@ debug/player.o: player.cpp player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsScene \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qbrush.h \
@@ -1851,7 +1852,8 @@ debug/player.o: player.cpp player.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtouchdevice.h \
 		bullet.h \
 		enemy.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsRectItem
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsRectItem \
+		boss.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\player.o player.cpp
 
 debug/score.o: score.cpp score.h \

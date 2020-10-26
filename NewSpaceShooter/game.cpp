@@ -22,7 +22,7 @@ Game::Game(QWidget *parent){
 
     // Create the player
     player = new Player();
-    player->setPos(400,500);// Generalize to always be in the middle bottom
+    player->setPos(350,480);// Generalize to always be in the middle bottom
 
     // Make the player be the focus
     player->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -37,12 +37,6 @@ Game::Game(QWidget *parent){
     health = new Health();
     health->setPos(health->x(),health->y()+25);
     scene->addItem(health);
-
-    // Test Game over
-    if (health->getHealth() == 0) {
-        scene->removeItem(player);
-        delete player;
-    }
 
     // Spawn enemies with time
     QTimer * timer = new QTimer();

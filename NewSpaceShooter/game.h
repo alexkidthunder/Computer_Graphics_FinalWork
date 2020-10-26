@@ -17,7 +17,6 @@ public:
     Player * player;
     Score * score;
     Health * health;
-
 };
 
 #endif // GAME_H

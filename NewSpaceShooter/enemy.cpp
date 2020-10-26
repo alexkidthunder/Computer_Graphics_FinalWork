@@ -4,6 +4,7 @@
 #include <QList>
 #include <stdlib.h>
 #include "game.h"
+#include <time.h>
 
 extern Game * game;
 
@@ -19,6 +20,7 @@ Enemy::Enemy(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     QTimer * timer = new QTimer(this);
     connect( timer,SIGNAL( timeout() ),this,SLOT( move() ));
 
+
     // Timer Start
     timer->start(60);
 }
@@ -31,6 +33,9 @@ void Enemy::move(){
     if ( pos().y() > 600 ){
         // Decrease health
         game->health->decrease();
+        if (game->health->getHealth() == 0) {
+            game->health->Gameover();
+        }
         // Remove enemy
         scene()->removeItem(this);
         delete this;

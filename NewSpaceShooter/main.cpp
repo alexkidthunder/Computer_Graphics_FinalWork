@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
     w.setMinimumSize(800, 600);
     w.show();
 
-    // Create and show the 2D window
     game = new Game();
     game->show();
 
