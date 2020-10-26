@@ -19,6 +19,11 @@ Bullet::Bullet(QGraphicsItem *parent): QObject(),QGraphicsPixmapItem(parent){
     QTimer * timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 
+    // Set the music media
+    diesound = new QMediaPlayer();
+    diesound->setMedia(QUrl("qrc:/dead.wav"));
+    diesound->setVolume(25);
+
     // Start the timer
     timer->start(50);
 }
@@ -37,9 +42,19 @@ void Bullet::move(){
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
 
+            // play death sound
+            if (diesound->state() == QMediaPlayer::PlayingState){
+                diesound->setPosition(0);
+            }
+            else if (diesound->state() == QMediaPlayer::StoppedState){
+                diesound->play();
+            }
+
             // Delete them from the heap
             delete colliding_items[i];
             delete this;
+
+
 
             // Return
             return;
@@ -51,6 +66,14 @@ void Bullet::move(){
             // Remove from the scene
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
+
+            // play death sound
+            if (diesound->state() == QMediaPlayer::PlayingState){
+                diesound->setPosition(0);
+            }
+            else if (diesound->state() == QMediaPlayer::StoppedState){
+                diesound->play();
+            }
 
             // Delete them from the heap
             delete colliding_items[i];

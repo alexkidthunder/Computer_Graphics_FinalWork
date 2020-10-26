@@ -10,5 +10,6 @@
         <file>images/floor.png</file>
         <file>images/ship01.png</file>
         <file>images/Nship02.png</file>
+        <file>dead.wav</file>
     </qresource>
 </RCC>

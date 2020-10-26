@@ -8,6 +8,10 @@
 
 extern Game * game;
 
+void cleanup() {
+    delete game;
+}
+
 Enemy::Enemy(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     // Set random position X
     int random_number = rand() % 700;
@@ -34,10 +38,17 @@ void Enemy::move(){
         // Decrease health
         game->health->decrease();
         if (game->health->getHealth() == 0) {
-            game->health->Gameover();
+            game->health->Gameover();            
+        }
+        else if (game->health->getHealth() == -1) {
+
+            system("EXIT");
+            cleanup();
+            //exit(0); // Exit both executions
+
         }
         // Remove enemy
-        scene()->removeItem(this);
+        scene()->removeItem(this);        
         delete this;
     }
 }

@@ -97,7 +97,7 @@ void GLWidget::resizeGL(int width, int height) {
     glLoadIdentity();           // Reset
 }
 
-// ******************************* Painting ************************************
+// ********************************** Painting ***************************************
 
 // OpenGL painting code
 void GLWidget::paintGL() {
@@ -154,7 +154,10 @@ void GLWidget::paintGL() {
     // Configurations
     glTranslatef(0,0,-1.6);
     glScalef(0.3,0.3,0.3);
-    glTranslatef(0,-0.5,0);
+    glTranslatef(0,-0.5,_bulletDist);
+
+
+
 
 
     loadBulletModel();
@@ -186,7 +189,7 @@ void GLWidget::paintGL() {
     timer->start(60);
 }
 
-// ****************************** Handlers ***********************************
+// ********************************* Handlers ****************************************
 
 // Key handler
 void GLWidget::keyPressEvent(QKeyEvent *event) {
@@ -209,6 +212,9 @@ void GLWidget::keyPressEvent(QKeyEvent *event) {
         break;
     case Qt::Key_Down:  // Down Button
         _Vdistance -= 1;
+        break;
+    case Qt::Key_W:    // Up Button
+        _bulletDist -= 1;
         break;
     case Qt::Key_L:     // LIGHTING OFF / ON
         if (glIsEnabled(GL_LIGHTING))
@@ -252,7 +258,7 @@ void GLWidget::changeEvent(QEvent *event) {
     }
 }
 
-// ****************************** Spawn handler **********************************
+// ******************************** Spawn handler ************************************
 
 void GLWidget::spawn(int h, int i, int y)
 {
@@ -272,7 +278,7 @@ void GLWidget::spawn(int h, int i, int y)
     }
 }
 
-// ***************************** Texture handler **********************************
+// ****************************** Texture handler ************************************
 
 GLuint GLWidget::loadTexture(QImage image) {
     GLuint textureId;
@@ -291,7 +297,7 @@ GLuint GLWidget::loadTexture(QImage image) {
     return textureId; //Returns the id of the texture
 }
 
-// ****************************** Upload handler ***********************************
+// ******************************* Upload handler ************************************
 
 // Upload Model
 GLuint GLWidget::loadModel() {

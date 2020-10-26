@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
+#include <QMediaPlayer>
 #include <QObject>
 
 class Bullet: public QObject,public QGraphicsPixmapItem{
@@ -12,6 +13,9 @@ public:
 
 public slots:
     void move();
+
+private:
+    QMediaPlayer * diesound;
 };
 
 #endif // BULLET_H

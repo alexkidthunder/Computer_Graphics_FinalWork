@@ -145,6 +145,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_res.cpp
 release/qrc_res.cpp: res.qrc \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/bin/rcc.exe \
+		dead.wav \
 		floor.bmp \
 		sky.bmp \
 		pew.wav \
@@ -483,6 +484,27 @@ release/moc_bullet.cpp: bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qpixelformat.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtransform.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaobject.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimediaglobal.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimedia-config.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmultimedia.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediacontent.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaresource.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkrequest.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QSharedDataPointer \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QString \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QUrl \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurl.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QVariant \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaenumdebug.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		release/moc_predefs.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/bin/moc.exe
@@ -1131,6 +1153,27 @@ release/bullet.o: bullet.cpp bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qpixelformat.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtransform.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsItem \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaobject.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimediaglobal.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimedia-config.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmultimedia.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediacontent.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaresource.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkrequest.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QSharedDataPointer \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QString \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QUrl \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurl.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QVariant \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaenumdebug.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
+		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QTimer \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qtimer.h \
@@ -1160,33 +1203,12 @@ release/bullet.o: bullet.cpp bullet.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qcursor.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qkeysequence.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qevent.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurl.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qurlquery.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qfile.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QWidget \
 		player.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/QMediaPlayer \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaplayer.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaobject.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimediaglobal.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qtmultimedia-config.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmultimedia.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediacontent.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaresource.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkrequest.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetworkglobal.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qtnetwork-config.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QSharedDataPointer \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QString \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QUrl \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/QVariant \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qmediaenumdebug.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtCore/qmetaobject.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtMultimedia/qaudio.h \
-		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtNetwork/qnetworkconfiguration.h \
 		score.h \
 		C:/Qt/Qt5.14.2/5.14.2/mingw73_64/include/QtWidgets/QGraphicsTextItem \
 		health.h
