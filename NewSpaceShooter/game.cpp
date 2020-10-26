@@ -51,7 +51,7 @@ Game::Game(QWidget *parent){
     QMediaPlayer * music = new QMediaPlayer();
     //music->setMedia(QUrl("qrc:/bg.wav"));// Single Play
     music->setPlaylist(playlist);// Config Loop
-    music->setVolume(26);
+    music->setVolume(18);
     music->play(); // Play
 
     show();

@@ -22,7 +22,7 @@ Bullet::Bullet(QGraphicsItem *parent): QObject(),QGraphicsPixmapItem(parent){
     // Set the music media
     diesound = new QMediaPlayer();
     diesound->setMedia(QUrl("qrc:/dead.wav"));
-    diesound->setVolume(25);
+    diesound->setVolume(20);
 
     // Start the timer
     timer->start(50);

@@ -54,8 +54,8 @@ void GLWidget::initializeGL() {
 
     // Set up lighting
     GLfloat ambLight[] = {0.4f, 0.4f, 0.4f, 1.0f};
-    GLfloat diffLight[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat lightPos[] = {10.0f, 10.0f, 60.0f, 1.0f};
+    GLfloat diffLight[] = {0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat lightPos[] = {15.0f, 15.0f, 65.0f, 1.0f};
 
     // Add ambient lighting
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambLight);
@@ -155,7 +155,7 @@ void GLWidget::paintGL() {
     loadModel();
 
     // Configurations
-    glTranslatef(0,0,-1.6);
+    glTranslatef(0,0,-1.5);
     glScalef(0.25,0.25,0.25);
     glTranslatef(0,-0.5,_bulletDist);
 

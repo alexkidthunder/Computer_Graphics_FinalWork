@@ -9,7 +9,7 @@ Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent){
     // Set the music media
     bulletsound = new QMediaPlayer();
     bulletsound->setMedia(QUrl("qrc:/pew.wav"));
-    bulletsound->setVolume(30);
+    bulletsound->setVolume(20);
 
     // Set graphic
     setPixmap(QPixmap(":/images/ship01.png"));
